@@ -29,7 +29,7 @@ class CatalogosController extends Controller
                 ]
             ]);
         }
-
+// esto es un cambio prueba
     public function categoriasAgregarGet(): View
     {
         return view('catalogos.categoriasAgregarGet',[
