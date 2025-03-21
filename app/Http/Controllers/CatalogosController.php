@@ -140,5 +140,20 @@ class CatalogosController extends Controller
         ]
     ]);
 }
+public function comprasGet()
+{
+    $compras = DB::table('compra')
+        ->join('proveedor', 'compra.fk_id_proveedor', '=', 'proveedor.id_proveedor')
+        ->select('compra.id_compra', 'compra.fecha', 'compra.total', 'proveedor.nombre as nombre_proveedor')
+        ->get();
+
+    return view('catalogos.comprasGet', [
+        "compras" => $compras,
+        "breadcrumbs" => [
+            "Inicio" => URL("/"),
+            "Compras" => URL("/catalogo/compra")
+        ]
+    ]);
+}
     
 }

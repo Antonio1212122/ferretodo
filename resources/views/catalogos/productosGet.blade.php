@@ -7,15 +7,12 @@
 
 <div class="row my-4">
     <div class="col">
-        <h1>Empleados</h1>
+        <h1>Productos</h1>
     </div>
     <div class="col-auto titlebar-commands">
         <a class="btn btn-primary" href="{{ url('/catalogo/productos/agregar') }}">Agregar</a>
     </div>
 </div>
-
-<h1>Lista de Productos</h1>
-
 <table class="table" id="maintable">
     <thead>
         <tr>
