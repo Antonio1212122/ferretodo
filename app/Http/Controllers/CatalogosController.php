@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use Illuminate\Support\Facades\DB;
 
 use App\models\puesto;
 use Illuminate\Http\Request;
@@ -100,10 +101,15 @@ class CatalogosController extends Controller
             ]
         ]);
     }
-    public function productosGet():view
+
+    public function productosGet(): View
     {
-        $productos = producto::all();
-        return view('catalogos.productosGet',[
+        $productos = DB::table('producto')
+            ->join('categoria', 'producto.fk_id_categoria', '=', 'categoria.id_categoria')
+            ->select('producto.*', 'categoria.nombre as nombre_categoria')
+            ->get();
+    
+        return view('catalogos.productosGet', [
             "productos" => $productos,
             "breadcrumbs" => [
                 "Inicio" => URL("/"),

@@ -33,11 +33,11 @@
         <tr>
             <td>{{ $producto->id_producto }}</td>
             <td>{{ $producto->nombre }}</td>
-            <td>{{ $producto->descripcion }}</td>
+            <td>{{ $producto->descripción }}</td>
             <td>{{ $producto->cantidad }}</td>
             <td>${{ number_format($producto->precio_unitario, 2) }}</td>
             <td>${{ number_format($producto->precio_venta, 2) }}</td>
-            <td>{{ $producto->fk_id_categoria }}</td>
+            <td>{{ $producto->nombre_categoria }}</td>
         </tr>
         @endforeach
     </tbody>
