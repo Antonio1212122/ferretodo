@@ -117,6 +117,28 @@ class CatalogosController extends Controller
             ]
         ]);
     }
+    public function ventasGet(): View
+{
+    $ventas = DB::table('venta')
+        ->join('empleado', 'venta.fk_id_empleado', '=', 'empleado.id_empleado')
+        ->join('cliente', 'venta.fk_id_cliente', '=', 'cliente.id_cliente')
+        ->join('producto', 'venta.fk_id_producto', '=', 'producto.id_producto')
+        ->select(
+            'venta.id_venta',
+            'venta.fecha',
+            'empleado.nombre as nombre_empleado',
+            'cliente.nombre as nombre_cliente',
+            'producto.nombre as nombre_producto'
+        )
+        ->get();
+
+    return view('catalogos.ventasGet', [
+        "ventas" => $ventas,
+        "breadcrumbs" => [
+            "Inicio" => URL("/"),
+            "ventas" => URL("/catalogo/ventas")
+        ]
+    ]);
+}
     
-    }
-    
+}
