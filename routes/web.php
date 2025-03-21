@@ -29,4 +29,6 @@ route::get('/catalogo/empleados/agregar',[CatalogosController::class,'empleadosA
 
 route::get('/catalogo/proveedores',[CatalogosController::class,'proveedoresGet']);
 
+route::get('/catalogo/productos',[CatalogosController::class,'productosGet']);
+
 

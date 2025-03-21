@@ -100,7 +100,17 @@ class CatalogosController extends Controller
             ]
         ]);
     }
-
+    public function productosGet():view
+    {
+        $productos = producto::all();
+        return view('catalogos.productosGet',[
+            "productos" => $productos,
+            "breadcrumbs" => [
+                "Inicio" => URL("/"),
+                "productos" => URL("/catalogo/productos")
+            ]
+        ]);
+    }
     
     }
     
