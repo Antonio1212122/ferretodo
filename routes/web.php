@@ -20,12 +20,14 @@ Route::get('/', function () {
 });
 route::get('/catalogo/categorias',[CatalogosController::class,'categoriasGet']);
 route::get('/catalogo/categorias/agregar',[CatalogosController::class,'categoriasAgregarGet']);
+Route::post('/catalogo/categorias/agregar',[CatalogosController::class,'categoriasAgregarPost']);
 
 route::get('/catalogo/clientes',[CatalogosController::class,'clienteGet']);
 route::get('/catalogo/clientes/agregar',[CatalogosController::class,'clientesAgregarGet']);
 
 route::get('/catalogo/empleados',[CatalogosController::class,'empleadoGet']);
 route::get('/catalogo/empleados/agregar',[CatalogosController::class,'empleadosAgregarGet']);
+Route::post('/catalogos/empleados/agregar',[CatalogosController::class,'empleadosAgregarPost']);
 
 route::get('/catalogo/proveedores',[CatalogosController::class,'proveedoresGet']);
 

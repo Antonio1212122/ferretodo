@@ -42,6 +42,24 @@ class CatalogosController extends Controller
         ]);
     }
 
+    public function categoriasAgregarPost(Request $request) {
+        // Obtener los datos del formulario
+        $nombre = $request->input("nombre");
+        $descripción = $request->input("descripción");
+    
+        // Crear la nueva categoría
+        $categoria = new Categoria([
+            "nombre" => strtoupper($nombre),
+            "descripción" => $descripción,
+        ]);
+        $categoria->save();
+    
+        // Redirigir a la vista de categorías con un mensaje de éxito
+        return redirect("/catalogo/categorias")->with('success', 'Categoría agregada correctamente');
+    }
+    
+
+
     public function clienteGet(): View
     {
         $clientes = cliente::all(); // La clase 'Empleado' debe estar en mayúscula si sigue el estándar de Laravel
@@ -88,6 +106,35 @@ class CatalogosController extends Controller
             ]
         ]);
     }
+
+    public function empleadosAgregarPost(Request $request)
+    {
+        try {
+            // Validar los datos del formulario antes de guardar
+            $request->validate([
+                'nombre'   => 'required|string|max:50',
+                'puesto'   => 'required|string|max:50',
+                'telefono' => 'required|string|max:15',
+                'email'    => 'required|email|max:50|unique:empleado,email',
+            ]);
+
+            // Crear el nuevo empleado
+            $empleado = new Empleado();
+            $empleado->nombre = strtoupper($request->input("nombre"));
+            $empleado->puesto = $request->input("puesto");
+            $empleado->telefono = $request->input("telefono");
+            $empleado->email = $request->input("email");
+            $empleado->save();
+
+            // Redirigir con un mensaje de éxito
+            return redirect(url('/catalogo/empleados'))->with('success', 'Empleado agregado correctamente.');
+            
+        } catch (\Exception $e) {
+            // Capturar errores y devolver una respuesta clara
+            return redirect()->back()->with('error', 'Ocurrió un error: ' . $e->getMessage());
+        }
+    }
+
 
     public function proveedoresGet(): View
     {

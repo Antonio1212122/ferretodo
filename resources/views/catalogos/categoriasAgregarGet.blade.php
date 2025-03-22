@@ -18,8 +18,8 @@
     </div>
     <div class="row my-2">
         <div class="form-group">
-            <label for="descripcion">Descripción:</label>
-            <textarea name="descripcion" id="descripcion" placeholder="Ingrese una descripción de la categoria" class="form-control" required></textarea>
+            <label for="descripción">Descripción:</label>
+            <textarea name="descripción" id="descripción" placeholder="Ingrese una descripción de la categoria" class="form-control" required></textarea>
         </div>
     </div>
     <div class="row">

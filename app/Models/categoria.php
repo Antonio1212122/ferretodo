@@ -10,7 +10,7 @@ protected $primaryKey = 'id_categoria';//atributo de llave primaria asociado con
 public $incrementing = true;//indica si el id del modelo es autoincrementable
 protected $keyType = "int";// indica el tipo de dato del id autoincrementable
 protected $nombre;//nombre del campo para recibir el nombre del puesto
-protected $descripcion;//nombre del campo para recibir el sueldo
-protected $fillable=["nombre","descripcion"];//atributos que se pueden asignar masivamente
+protected $descripción;//nombre del campo para recibir el sueldo
+protected $fillable=["nombre","descripción"];//atributos que se pueden asignar masivamente
 public $timestamps=false;
 }
