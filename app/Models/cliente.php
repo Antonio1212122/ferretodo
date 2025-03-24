@@ -17,6 +17,6 @@ protected $apellido;
 protected $direccion;
 protected $telefono;
 protected $email; //nombre del campo para recibir el email
-protected $fillable=["nombre","apellido","direccion","email"];//atributos que se pueden asignar masivamente
+protected $fillable=["nombre","apellido","direccion","telefono","email"];//atributos que se pueden asignar masivamente
 public $timestamps=false; 
 }

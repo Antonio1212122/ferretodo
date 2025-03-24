@@ -83,6 +83,30 @@ class CatalogosController extends Controller
         ]);
     }
 
+    public function clientesAgregarPost(Request $request)
+    {
+        $nombre = $request->input('nombre');
+        $apellido = $request->input('apellido');
+        $direccion = $request->input('direccion');
+        $telefono = $request->input('telefono');
+        $email = $request->input('email');
+
+        // Crear una nueva instancia del modelo Cliente
+        $cliente = new Cliente([
+            'nombre' => strtoupper($nombre),  // Convertir a mayúsculas
+            'apellido' => strtoupper($apellido),
+            'direccion' => $direccion,
+            'telefono' => $telefono,
+            'email' => $email
+        ]);
+
+        $cliente->save();
+
+        // Redirigir a la vista de clientes con un mensaje de éxito
+        return redirect('/catalogo/clientes')->with('success', 'Cliente agregado correctamente');
+    }
+
+
     public function empleadoGet(): View
     {
         $empleados = Empleado::all(); // Asegúrate de que la clase "Empleado" tenga la mayúscula inicial

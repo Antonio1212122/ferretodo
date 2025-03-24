@@ -20,22 +20,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ferretodo</title>
 </head>
-</html>
 <body>
     <div class="row">
         <div class="col-2">
             @component("components.siderbar")
             @endcomponent
         </div>
-        <div class="col-10">
-            <div class="container">
-                @section("content")
-                @show
-            </div>
+    <div class="col-10">
+        <div class="container">
+            @section("content")
+            @show
         </div>
     </div>
-</body>
-</html>
-
+    </div>
 </body>
 </html>

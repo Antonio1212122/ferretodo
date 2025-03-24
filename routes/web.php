@@ -24,6 +24,7 @@ Route::post('/catalogo/categorias/agregar',[CatalogosController::class,'categori
 
 route::get('/catalogo/clientes',[CatalogosController::class,'clienteGet']);
 route::get('/catalogo/clientes/agregar',[CatalogosController::class,'clientesAgregarGet']);
+Route::post('/catalogo/clientes/agregar',[CatalogosController::class,'clientesAgregarPost']);
 
 route::get('/catalogo/empleados',[CatalogosController::class,'empleadoGet']);
 route::get('/catalogo/empleados/agregar',[CatalogosController::class,'empleadosAgregarGet']);
