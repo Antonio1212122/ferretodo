@@ -36,7 +36,7 @@ class CatalogosController extends Controller
         return view('catalogos.categoriasAgregarGet',[
             "breadcrumbs" =>[
                 "Inicio" =>url("/"),
-                "Puestos" => url("/catalogo/categorias"),
+                "Categorias" => url("/catalogo/categorias"),
                 "Agregar" => url("/catalogo/categorias/agregar")
             ]
         ]);
@@ -77,7 +77,7 @@ class CatalogosController extends Controller
         return view('catalogos.clientesAgregarGet',[
             "breadcrumbs" =>[
                 "Inicio" =>url("/"),
-                "Puestos" => url("/catalogo/clientes"),
+                "Clientes" => url("/catalogo/clientes"),
                 "Agregar" => url("/catalogo/clientes/agregar")
             ]
         ]);
@@ -168,9 +168,33 @@ class CatalogosController extends Controller
             "proveedores" => $proveedores,  // Ahora sí pasamos la variable correcta
             "breadcrumbs" => [
                 "Inicio" => URL("/"), 
-                "productos" => URL("/catalogo/proveedor")
+                "proveedores" => URL("/catalogos/proveedor")
             ]
         ]);
+    }
+    public function proveedoresAgregarGet(): View
+    {
+        return view('catalogos.proveedoresAgregarGet',[
+            "breadcrumbs" =>[
+                "Inicio" =>url("/"),
+                "Proveedores" => url("/catalogo/proveedor"),
+                "Agregar" => url("/catalogos/proveedores/agregar")
+            ]
+        ]);
+    }
+    public function proveedoresAgregarPost(Request $request)
+    {
+        $nombre = $request->input("nombre");
+    
+        // Crear instancia del modelo Proveedor
+        $proveedor = new Proveedor([
+            "nombre" => ($nombre)
+        ]);
+    
+        // Guardar en la base de datos
+        $proveedor->save();
+    
+        return redirect("/catalogo/proveedores");
     }
 
     public function productosGet(): View
