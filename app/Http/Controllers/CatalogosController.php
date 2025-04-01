@@ -186,31 +186,74 @@ class CatalogosController extends Controller
     {
         $nombre = $request->input("nombre");
     
-        // Crear instancia del modelo Proveedor
         $proveedor = new Proveedor([
             "nombre" => ($nombre)
         ]);
     
-        // Guardar en la base de datos
         $proveedor->save();
     
         return redirect("/catalogo/proveedores");
     }
 
     public function productosGet(): View
+{
+    $productos = DB::table('producto')
+        ->leftJoin('categoria', 'producto.fk_id_categoria', '=', 'categoria.id_categoria')
+        ->select('producto.*', 'categoria.nombre as nombre_categoria')
+        ->orderBy('producto.id_producto', 'DESC')
+        ->get();
+
+    $categorias = DB::table('categoria')->get(); // Obtiene todas las categorías
+
+    return view('catalogos.productosGet', [
+        "productos" => $productos,
+        "categorias" => $categorias, // Pasamos las categorías a la vista
+        "breadcrumbs" => [
+            "Inicio" => URL("/"),
+            "Productos" => URL("/catalogos/productos")
+        ]
+    ]);
+}
+    public function productosAgregarGet()
     {
-        $productos = DB::table('producto')
-            ->join('categoria', 'producto.fk_id_categoria', '=', 'categoria.id_categoria')
-            ->select('producto.*', 'categoria.nombre as nombre_categoria')
-            ->get();
+        $productos = Producto::all(); // Obtener todos los productos
+        $categorias = Categoria::all(); // Obtener todas las categorías para el formulario
     
-        return view('catalogos.productosGet', [
+        return view('catalogos.productosAgregarGet', [
             "productos" => $productos,
+            "categorias" => $categorias, // Agregar las categorías
             "breadcrumbs" => [
                 "Inicio" => URL("/"),
-                "productos" => URL("/catalogo/productos")
+                "productos" => URL("/catalogo/productos"),
+                "Agregar" => URL("/catalogo/productos/agregar")
             ]
         ]);
+    }
+    public function productosAgregarPost(Request $request)
+    {
+        // Obtener los datos del formulario
+        $nombre = $request->input("nombre");
+        $descripcion = $request->input("descripcion");
+        $cantidad = $request->input("cantidad");
+        $precio_unitario = $request->input("precio_unitario");
+        $precio_venta = $request->input("precio_venta");
+        $fk_id_categoria = $request->input("fk_id_categoria");
+    
+        // Crear una nueva instancia de Producto
+        $producto = new Producto([
+            "nombre" => $nombre,
+            "descripcion" => $descripcion,
+            "cantidad" => $cantidad,
+            "precio_unitario" => $precio_unitario,
+            "precio_venta" => $precio_venta,
+            "fk_id_categoria" => $fk_id_categoria
+        ]);
+    
+        // Guardar en la base de datos
+        $producto->save();
+    
+        // Redirigir a la lista de productos
+        return redirect("/catalogo/productos");
     }
     public function ventasGet(): View
 {

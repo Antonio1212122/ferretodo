@@ -38,4 +38,7 @@ route::get('/catalogo/compra',[CatalogosController::class,'comprasGet']);
 
 route::get('/catalogo/proveedores/agregar',[CatalogosController::class,'proveedoresAgregarGet']);
 Route::post('/catalogos/proveedores/agregar', [CatalogosController::class, 'proveedoresAgregarPost']);
+route::get('/catalogo/productos/agregar',[CatalogosController::class,'productosAgregarGet']);
+Route::post('/catalogos/productos/agregar',[CatalogosController::class,'productosAgregarPost']);
+route::get('catalogos/index',[CatalogosController::class,'indexGet']);
 
