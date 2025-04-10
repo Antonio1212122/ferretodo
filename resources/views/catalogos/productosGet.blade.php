@@ -31,7 +31,7 @@
         <tr>
             <td class="text-center">{{ $producto->id_producto }}</td>
             <td class="text-center">{{ $producto->nombre }}</td>
-            <td class="text-center">{{ $producto->descripcion }}</td>
+            <td class="text-center">{{ $producto->descripción }}</td>
             <td class="text-center">{{ $producto->cantidad }}</td>
             <td class="text-center">${{ number_format($producto->precio_unitario, 2) }}</td>
             <td class="text-center">${{ number_format($producto->precio_venta, 2) }}</td>
