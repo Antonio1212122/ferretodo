@@ -2,7 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CatalogosController;
-use App\Http\Controllers\EmpleadosController;
+use App\Http\Controllers\ReportesController;
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\RegisterController;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,5 +42,15 @@ route::get('/catalogo/proveedores/agregar',[CatalogosController::class,'proveedo
 Route::post('/catalogos/proveedores/agregar', [CatalogosController::class, 'proveedoresAgregarPost']);
 route::get('/catalogo/productos/agregar',[CatalogosController::class,'productosAgregarGet']);
 Route::post('/catalogos/productos/agregar',[CatalogosController::class,'productosAgregarPost']);
-route::get('catalogos/index',[CatalogosController::class,'indexGet']);
 
+route::get('/reportes',[ReportesController::class,'indexGet']);
+Route::get("/reportes/compras", [ReportesController::class, "comprasGet"]);
+Route::get("/reportes/ventas", [ReportesController::class, "ventasGet"]);
+Route::get("/reportes/productos_mas_vendidos", [ReportesController::class, "productosGet"]);
+
+Route::get("/login", [LoginController::class, 'showLoginForm'])->name('login');
+Route::post("/login", [LoginController::class, 'login']);
+Route::post("/logout", [LoginController::class, 'logout'])->name('logout');
+
+Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
+Route::post('/register', [RegisterController::class, 'register']);
