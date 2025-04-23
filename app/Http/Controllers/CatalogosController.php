@@ -13,6 +13,8 @@ use App\models\categoria;
 use App\models\cliente;
 use App\models\proveedor;
 use App\models\producto;
+use App\models\compra;
+use App\models\detallecompra;
 class CatalogosController extends Controller
 {
     public function home():view
@@ -293,7 +295,56 @@ public function comprasGet()
         ]
     ]);
 }
+public function comprasAgregarGet(): View
+{
+    $productos = Producto::all();
+    $proveedores = Proveedor::all();
+    $categoria = Categoria::all();
 
+    return view('catalogos.comprasAgregarGet', [
+        'productos' => $productos,
+        'proveedores' => $proveedores,
+        'categorias' => $categoria,
+        'breadcrumbs' => [
+            'Inicio' => url('/'),
+            'Compras' => url('/catalogos/compras'),
+            'Agregar' => url('/catalogos/compras/agregar')
+        ]
+    ]);
+}
 
+public function comprasAgregarPost(Request $request)
+{
+    $request->validate([
+        'fecha' => 'required|date',
+        'fk_id_proveedor' => 'required|exists:proveedor,id_proveedor',
+        'compras' => 'required|array|min:1',
+        'compras.*.fk_id_producto' => 'required|exists:producto,id_producto',
+        'compras.*.cantidad' => 'required|integer|min:1',
+        'compras.*.precio_unitario' => 'required|numeric|min:0',
+        'compras.*.importe' => 'required|numeric|min:0',
+    ]);
+
+    // Crear la compra
+    $compra = Compra::create([
+        'fecha' => $request->fecha,
+        'total' => collect($request->compras)->sum('importe'),
+        'fk_id_proveedor' => $request->fk_id_proveedor
+    ]);
+
+    // Guardar detalle de compra
+    foreach ($request->compras as $detalle) {
+        DetalleCompra::create([
+            'fk_id_compra' => $compra->id_compra,
+            'fk_id_producto' => $detalle['fk_id_producto'],
+            'cantidad' => $detalle['cantidad'],
+            'precio_unitario' => $detalle['precio_unitario'],
+            'importe' => $detalle['importe'],
+            'fk_id_proveedor' => $request->fk_id_proveedor // corregido aquí
+        ]);
+    }
+
+    return redirect('/catalogo/compra')->with('success', 'Compra registrada correctamente.');
+}
     
 }

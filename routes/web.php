@@ -54,3 +54,6 @@ Route::post("/logout", [LoginController::class, 'logout'])->name('logout');
 
 Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
 Route::post('/register', [RegisterController::class, 'register']);
+
+Route::get('/catalogo/compras/agregar', [CatalogosController::class, 'comprasAgregarGet']);
+Route::post('/catalogos/compras', [CatalogosController::class, 'comprasAgregarPost']);
