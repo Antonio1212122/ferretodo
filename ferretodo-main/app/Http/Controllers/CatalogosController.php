@@ -273,7 +273,7 @@ class CatalogosController extends Controller
                 'empleado.nombre as nombre_empleado',
                 'cliente.nombre as nombre_cliente',
                 DB::raw('GROUP_CONCAT(producto.nombre SEPARATOR ", ") as nombres_productos'),
-                DB::raw('SUM(detalle_venta.importe) as importe_total_venta') // Puedes agregar el total de la venta si lo deseas
+                DB::raw('SUM(detalle_venta.importe) as importe_total_venta') 
             )
             ->groupBy('venta.id_venta', 'venta.fecha', 'empleado.nombre', 'cliente.nombre')
             ->orderBy('venta.id_venta', 'DESC')
@@ -316,24 +316,22 @@ public function ventasAgregarGet(): View
         'productos.*.fk_id_producto' => 'required|exists:producto,id_producto',
         'productos.*.cantidad' => 'required|integer|min:1',
         'productos.*.precio_venta' => 'required|numeric|min:0',
-        'productos.*.importe' => 'required|numeric|min:0', // Asegúrate de calcular esto en el frontend o backend
+        'productos.*.importe' => 'required|numeric|min:0', 
     ]);
 
-    // Crear la venta principal
     $venta = Venta::create([
         'fecha' => $request->fecha,
         'fk_id_empleado' => $request->fk_id_empleado,
         'fk_id_cliente' => $request->fk_id_cliente,
     ]);
 
-    // Guardar los detalles de la venta
     foreach ($request->productos as $productoData) {
         DetalleVenta::create([
             'fk_id_venta' => $venta->id_venta,
             'fk_id_producto' => $productoData['fk_id_producto'],
             'cantidad' => $productoData['cantidad'],
             'precio_venta' => $productoData['precio_venta'],
-            'importe' => $productoData['importe'], // Asegúrate de calcular esto en el frontend
+            'importe' => $productoData['importe'], 
         ]);
     }
 

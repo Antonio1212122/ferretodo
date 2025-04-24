@@ -142,7 +142,7 @@ document.addEventListener('DOMContentLoaded', function () {
         crearLineaVenta(lineaIndex++);
     });
 
-    crearLineaVenta(lineaIndex++); // Agregar una línea inicial
+    crearLineaVenta(lineaIndex++); 
 });
 </script>
 
