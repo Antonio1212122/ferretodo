@@ -6,7 +6,7 @@
 
     <br>
     <div class="row my-4">
-        <h1>Proyecto Préstamos</h1>
+        <h1>Ferretodo</h1>
     </div>
 
     <div class="row my-4">
@@ -29,7 +29,7 @@
                 <div class="card-body">
                     <h5 class="card-title">Acerca del Proyecto</h5>
                     <p class="card-text">
-                        Este sistema de gestión de préstamos fue desarrollado como parte de la materia
+                        Este sistema de gestión de una ferreteria fue desarrollado como parte de la materia
                         <strong>Desarrollo e Implementación de Sistemas de Información</strong> en el <strong>Tecnológico Nacional de México, campus Colima</strong>.
                     </p>
                 </div>
