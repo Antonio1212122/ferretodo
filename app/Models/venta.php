@@ -15,7 +15,6 @@ class Venta extends Model
     protected $fecha;
     protected $fk_id_empleado;
     protected $fk_id_cliente;
-    protected $fk_id_producto;
-    protected $fillable=["fecha","fk_id_empleado","fk_id_cliente","fk_id_producto"];
+    protected $fillable=["fecha","fk_id_empleado","fk_id_cliente"];
     public $timestamps =false;
 }

@@ -15,6 +15,8 @@ use App\models\proveedor;
 use App\models\producto;
 use App\models\compra;
 use App\models\detallecompra;
+use App\Models\venta;
+use App\Models\detalleventa;
 class CatalogosController extends Controller
 {
     public function home():view
@@ -258,28 +260,82 @@ class CatalogosController extends Controller
         return redirect("/catalogo/productos");
     }
     public function ventasGet(): View
-{
-    $ventas = DB::table('venta')
-        ->join('empleado', 'venta.fk_id_empleado', '=', 'empleado.id_empleado')
-        ->join('cliente', 'venta.fk_id_cliente', '=', 'cliente.id_cliente')
-        ->join('producto', 'venta.fk_id_producto', '=', 'producto.id_producto')
-        ->select(
-            'venta.id_venta',
-            'venta.fecha',
-            'empleado.nombre as nombre_empleado',
-            'cliente.nombre as nombre_cliente',
-            'producto.nombre as nombre_producto'
-        )
-        ->get();
+    {
+        $ventas = DB::table('venta')
+            ->join('empleado', 'venta.fk_id_empleado', '=', 'empleado.id_empleado')
+            ->join('cliente', 'venta.fk_id_cliente', '=', 'cliente.id_cliente')
+            ->leftJoin('detalle_venta', 'venta.id_venta', '=', 'detalle_venta.fk_id_venta')
+            ->leftJoin('producto', 'detalle_venta.fk_id_producto', '=', 'producto.id_producto')
+            ->select(
+                'venta.id_venta',
+                'venta.fecha',
+                'empleado.nombre as nombre_empleado',
+                'cliente.nombre as nombre_cliente',
+                DB::raw('GROUP_CONCAT(producto.nombre SEPARATOR ", ") as nombres_productos'),
+                DB::raw('SUM(detalle_venta.importe) as importe_total_venta') 
+            )
+            ->groupBy('venta.id_venta', 'venta.fecha', 'empleado.nombre', 'cliente.nombre')
+            ->orderBy('venta.id_venta', 'DESC')
+            ->get();
+    
+        return view('catalogos.ventasGet', [
+            "ventas" => $ventas,
+            "breadcrumbs" => [
+                "Inicio" => URL("/"),
+                "ventas" => URL("/catalogo/ventas")
+            ]
+        ]);
+    }////////
+    public function ventasAgregarGet(): View
+    {
+        $empleados = Empleado::all();
+        $clientes = Cliente::all();
+        $productos = Producto::all();
 
-    return view('catalogos.ventasGet', [
-        "ventas" => $ventas,
-        "breadcrumbs" => [
-            "Inicio" => URL("/"),
-            "ventas" => URL("/catalogo/ventas")
-        ]
+        return view('catalogos.ventasAgregarGet', [
+            'empleados' => $empleados,
+            'clientes' => $clientes,
+            'productos' => $productos,
+            'breadcrumbs' => [
+                'Inicio' => url('/'),
+                'Ventas' => url('/catalogo/ventas'),
+                'Agregar' => url('/catalogo/ventas/agregar')
+            ]
+        ]);
+    }///
+
+    public function ventasAgregarPost(Request $request)
+{
+    $request->validate([
+        'fecha' => 'required|date',
+        'fk_id_empleado' => 'required|exists:empleado,id_empleado',
+        'fk_id_cliente' => 'required|exists:cliente,id_cliente',
+        'productos' => 'required|array|min:1',
+        'productos.*.fk_id_producto' => 'required|exists:producto,id_producto',
+        'productos.*.cantidad' => 'required|integer|min:1',
+        'productos.*.precio_venta' => 'required|numeric|min:0',
+        'productos.*.importe' => 'required|numeric|min:0', 
     ]);
+
+    $venta = Venta::create([
+        'fecha' => $request->fecha,
+        'fk_id_empleado' => $request->fk_id_empleado,
+        'fk_id_cliente' => $request->fk_id_cliente,
+    ]);
+
+    foreach ($request->productos as $productoData) {
+        DetalleVenta::create([
+            'fk_id_venta' => $venta->id_venta,
+            'fk_id_producto' => $productoData['fk_id_producto'],
+            'cantidad' => $productoData['cantidad'],
+            'precio_venta' => $productoData['precio_venta'],
+            'importe' => $productoData['importe'], 
+        ]);
+    }///////
+
+    return redirect('/catalogo/ventas');
 }
+
 public function comprasGet()
 {
     $compras = DB::table('compra')

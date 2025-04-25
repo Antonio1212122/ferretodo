@@ -29,7 +29,7 @@
             <td>{{ $venta->fecha }}</td>
             <td>{{ $venta->nombre_empleado }}</td>
             <td>{{ $venta->nombre_cliente }}</td>
-            <td>{{ $venta->nombre_producto }}</td>
+            <td>{{ $venta->nombres_productos }}</td>
         </tr>
         @endforeach
     </tbody>
