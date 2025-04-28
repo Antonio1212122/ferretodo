@@ -3,20 +3,20 @@
 namespace App\Http\Controllers;
 use Illuminate\Support\Facades\DB;
 
-use App\models\puesto;
+use App\Models\Puesto;
 use Illuminate\Http\Request;
 use datatime;
 use Illuminate\view\View;
-use App\models\empleado;
-use App\models\det_emp_puesto;
-use App\models\categoria;
-use App\models\cliente;
-use App\models\proveedor;
-use App\models\producto;
-use App\models\compra;
-use App\models\detallecompra;
-use App\Models\venta;
-use App\Models\detalleventa;
+use App\Models\Empleado;
+use App\Models\Det_emp_puesto;
+use App\Models\Categoria;
+use App\Models\Cliente;
+use App\Models\Proveedor;
+use App\Models\Producto;
+use App\Models\Compra;
+use App\Models\Detallecompra;
+use App\Models\Venta;
+use App\Models\Detalleventa;
 class CatalogosController extends Controller
 {
     public function home():view
@@ -25,7 +25,7 @@ class CatalogosController extends Controller
     }
     public function categoriasGet(): View
     {
-        $categorias = categoria::all(); // La clase 'Puesto' debe estar en mayúscula si sigue el estándar de Laravel
+        $categorias = Categoria::all(); // La clase 'Puesto' debe estar en mayúscula si sigue el estándar de Laravel
         return view('catalogos.categoriasGet', [
             "categorias" => $categorias, 
             "breadcrumbs" => [
@@ -66,7 +66,7 @@ class CatalogosController extends Controller
 
     public function clienteGet(): View
     {
-        $clientes = cliente::all(); // La clase 'Empleado' debe estar en mayúscula si sigue el estándar de Laravel
+        $clientes = Cliente::all(); // La clase 'Empleado' debe estar en mayúscula si sigue el estándar de Laravel
         return view('catalogos.clientesGet', [
             "clientes" => $clientes, 
             "breadcrumbs" => [
@@ -166,7 +166,7 @@ class CatalogosController extends Controller
 
     public function proveedoresGet(): View
     {
-        $proveedores = proveedor::all(); // Asegúrate de que la clase "Empleado" tenga la mayúscula inicial
+        $proveedores = Proveedor::all(); // Asegúrate de que la clase "Empleado" tenga la mayúscula inicial
         
         return view('catalogos.proveedoresGet', [
             "proveedores" => $proveedores,  // Ahora sí pasamos la variable correcta
