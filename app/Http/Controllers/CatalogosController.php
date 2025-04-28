@@ -3,20 +3,20 @@
 namespace App\Http\Controllers;
 use Illuminate\Support\Facades\DB;
 
-use App\models\puesto;
+use App\models\Puesto;
 use Illuminate\Http\Request;
 use datatime;
 use Illuminate\view\View;
-use App\models\empleado;
-use App\models\det_emp_puesto;
-use App\models\categoria;
-use App\models\cliente;
-use App\models\proveedor;
-use App\models\producto;
-use App\models\compra;
-use App\models\detallecompra;
-use App\Models\venta;
-use App\Models\detalleventa;
+use App\models\Empleado;
+use App\models\Det_emp_puesto;
+use App\models\Categoria;
+use App\models\Cliente;
+use App\models\Proveedor;
+use App\models\Producto;
+use App\models\Compra;
+use App\models\Detallecompra;
+use App\Models\Venta;
+use App\Models\Detalleventa;
 class CatalogosController extends Controller
 {
     public function home():view
