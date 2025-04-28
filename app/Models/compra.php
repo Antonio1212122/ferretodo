@@ -7,18 +7,28 @@ use Illuminate\Database\Eloquent\Model;
 
 class Compra extends Model
 {
-    public function proveedor()
-{
-    return $this->belongsTo(Proveedor::class);
-}
     use HasFactory;
-    protected $table='compra';
-    protected $primaryKey = 'id_compra';    
-    public $incrementing=true;
-    protected $keytype='int';
-    protected $fecha;
-    protected $total;
-    protected $fk_id_proveedor;
-    protected $fillable=["fecha","total","fk_id_proveedor"];
-    public $timestamps =false;
+
+    protected $table = 'compra';
+    protected $primaryKey = 'id_compra';
+    public $incrementing = true;
+    protected $keyType = 'int';
+    public $timestamps = false;
+
+    protected $fillable = [
+        "fecha",
+        "total",
+        "fk_id_proveedor"
+    ];
+
+    // Relaciones
+    public function proveedor()
+    {
+        return $this->belongsTo(Proveedor::class, 'fk_id_proveedor', 'id_proveedor');
+    }
+
+    public function detalles()
+    {
+        return $this->hasMany(DetalleCompra::class, 'fk_id_compra', 'id_compra');
+    }
 }

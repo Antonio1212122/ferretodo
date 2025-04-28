@@ -19,17 +19,23 @@
             <th>Fecha</th>
             <th>Total</th>
             <th>Proveedor</th>
+            <th>Acciones</th>
         </tr>
     </thead>
     <tbody>
-        @foreach($compras as $compra)
-        <tr>
-            <td>{{ $compra->id_compra }}</td>
-            <td>{{ $compra->fecha }}</td>
-            <td>${{ number_format($compra->total, 2) }}</td>
-            <td>{{ $compra->nombre_proveedor }}</td>
-        </tr>
-        @endforeach
+    @foreach($compras as $compra)
+    <tr>
+        <td>{{ $compra->id_compra }}</td>
+        <td>{{ $compra->fecha }}</td>
+        <td>${{ number_format($compra->total, 2) }}</td>
+        <td>{{ $compra->nombre_proveedor }}</td>
+        <td>
+            <a href="{{ url('/catalogo/compras/' . $compra->id_compra . '/detalle') }}" class="btn btn-info btn-sm">
+                Ver Detalle
+            </a>
+        </td>
+    </tr>
+    @endforeach
     </tbody>
 </table>
 

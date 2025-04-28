@@ -402,5 +402,18 @@ public function comprasAgregarPost(Request $request)
 
     return redirect('/catalogo/compra')->with('success', 'Compra registrada correctamente.');
 }
+public function comprasDetalleGet($id_compra)
+{
+    $compra = Compra::with(['proveedor', 'detalles.producto'])->findOrFail($id_compra);
+
+    return view('catalogos.comprasDetalleGet', [
+        'compra' => $compra,
+        'breadcrumbs' => [
+            'Inicio' => url('/'),
+            'Compras' => url('/catalogo/compra'),
+            'Detalle de Compra' => url("/catalogo/compras/$id_compra/detalle")
+        ]
+    ]);
+}
     
 }
