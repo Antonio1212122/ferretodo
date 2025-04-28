@@ -3,18 +3,18 @@
 namespace App\Http\Controllers;
 use Illuminate\Support\Facades\DB;
 
-use App\models\Puesto;
+use App\Models\Puesto;
 use Illuminate\Http\Request;
 use datatime;
 use Illuminate\view\View;
-use App\models\Empleado;
-use App\models\Det_emp_puesto;
-use App\models\Categoria;
-use App\models\Cliente;
-use App\models\Proveedor;
-use App\models\Producto;
-use App\models\Compra;
-use App\models\Detallecompra;
+use App\Models\Empleado;
+use App\Models\Det_emp_puesto;
+use App\Models\Categoria;
+use App\Models\Cliente;
+use App\Models\Proveedor;
+use App\Models\Producto;
+use App\Models\Compra;
+use App\Models\Detallecompra;
 use App\Models\Venta;
 use App\Models\Detalleventa;
 class CatalogosController extends Controller
