@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class proveedor extends Model
+class Proveedor extends Model
 {
     use HasFactory;
     protected $table = 'proveedor'; // nombre de la tabla en la BD a la que el modelo hace referencia.

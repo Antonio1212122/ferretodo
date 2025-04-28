@@ -25,7 +25,7 @@ class CatalogosController extends Controller
     }
     public function categoriasGet(): View
     {
-        $categorias = categoria::all(); // La clase 'Puesto' debe estar en mayúscula si sigue el estándar de Laravel
+        $categorias = Categoria::all(); // La clase 'Puesto' debe estar en mayúscula si sigue el estándar de Laravel
         return view('catalogos.categoriasGet', [
             "categorias" => $categorias, 
             "breadcrumbs" => [
@@ -66,7 +66,7 @@ class CatalogosController extends Controller
 
     public function clienteGet(): View
     {
-        $clientes = cliente::all(); // La clase 'Empleado' debe estar en mayúscula si sigue el estándar de Laravel
+        $clientes = Cliente::all(); // La clase 'Empleado' debe estar en mayúscula si sigue el estándar de Laravel
         return view('catalogos.clientesGet', [
             "clientes" => $clientes, 
             "breadcrumbs" => [
@@ -166,7 +166,7 @@ class CatalogosController extends Controller
 
     public function proveedoresGet(): View
     {
-        $proveedores = proveedor::all(); // Asegúrate de que la clase "Empleado" tenga la mayúscula inicial
+        $proveedores = Proveedor::all(); // Asegúrate de que la clase "Empleado" tenga la mayúscula inicial
         
         return view('catalogos.proveedoresGet', [
             "proveedores" => $proveedores,  // Ahora sí pasamos la variable correcta
