@@ -16,7 +16,7 @@ use App\Models\Producto;
 use App\Models\Compra;
 use App\Models\Detallecompra;
 use App\Models\Venta;
-use App\Models\Detalleventa;
+use App\Models\DetalleVenta;//
 class CatalogosController extends Controller
 {
     public function home():view
