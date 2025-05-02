@@ -300,41 +300,43 @@ class CatalogosController extends Controller
     }///
 
     public function ventasAgregarPost(Request $request)
-    {
-        $request->validate([
-            'fecha' => 'required|date',
-            'fk_id_empleado' => 'required|exists:empleado,id_empleado',
-            'fk_id_cliente' => 'required|exists:cliente,id_cliente',
-            'productos' => 'required|array|min:1',
-            'productos.*.fk_id_producto' => 'required|exists:producto,id_producto',
-            'productos.*.cantidad' => 'required|integer|min:1',
-            'productos.*.precio_venta' => 'required|numeric|min:0',
-            'productos.*.importe' => 'required|numeric|min:0',
+{
+    $request->validate([
+        'fecha' => 'required|date',
+        'fk_id_empleado' => 'required|exists:empleado,id_empleado',
+        'fk_id_cliente' => 'required|exists:cliente,id_cliente',
+        'productos' => 'required|array|min:1',
+        'productos.*.fk_id_producto' => 'required|exists:producto,id_producto',
+        'productos.*.cantidad' => 'required|integer|min:1',
+        'productos.*.precio_venta' => 'required|numeric|min:0',
+        'productos.*.importe' => 'required|numeric|min:0',
+    ]);
+
+    $venta = Venta::create([
+        'fecha' => $request->fecha,
+        'fk_id_empleado' => $request->fk_id_empleado,
+        'fk_id_cliente' => $request->fk_id_cliente,
+        'total' => 0, // Proporcionamos un valor inicial para 'total'
+    ]);
+
+    $totalVenta = 0;
+
+    foreach ($request->productos as $productoData) {
+        DetalleVenta::create([
+            'fk_id_venta' => $venta->id_venta,
+            'fk_id_producto' => $productoData['fk_id_producto'],
+            'cantidad' => $productoData['cantidad'],
+            'precio_venta' => $productoData['precio_venta'],
+            'importe' => $productoData['importe'],
         ]);
-    
-        $venta = Venta::create([
-            'fecha' => $request->fecha,
-            'fk_id_empleado' => $request->fk_id_empleado,
-            'fk_id_cliente' => $request->fk_id_cliente,
-        ]);
-    
-        $totalVenta = 0;
-    
-        foreach ($request->productos as $productoData) {
-            DetalleVenta::create([
-                'fk_id_venta' => $venta->id_venta,
-                'fk_id_producto' => $productoData['fk_id_producto'],
-                'cantidad' => $productoData['cantidad'],
-                'precio_venta' => $productoData['precio_venta'],
-                'importe' => $productoData['importe'],
-            ]);
-            $totalVenta += $productoData['importe']; 
-        }
-        $venta->total = $totalVenta;
-        $venta->save();
-    
-        return redirect('/catalogo/ventas');
+        $totalVenta += $productoData['importe'];
     }
+
+    $venta->total = $totalVenta;
+    $venta->save();
+
+    return redirect('/catalogo/ventas');
+}
 
 public function ventasDetalleGet($id_venta): View
 {
