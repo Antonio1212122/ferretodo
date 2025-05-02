@@ -259,35 +259,34 @@ class CatalogosController extends Controller
         // Redirigir a la lista de productos
         return redirect("/catalogo/productos");
     }
-    
     public function ventasGet(): View
-{
-    $ventas = DB::table('venta')
-        ->join('empleado', 'venta.fk_id_empleado', '=', 'empleado.id_empleado')
-        ->join('cliente', 'venta.fk_id_cliente', '=', 'cliente.id_cliente')
-        ->leftJoin('detalle_venta', 'venta.id_venta', '=', 'detalle_venta.fk_id_venta')
-        ->leftJoin('producto', 'detalle_venta.fk_id_producto', '=', 'producto.id_producto')
-        ->select(
-            'venta.id_venta',
-            'venta.fecha',
-            'venta.total', // Agregamos la columna 'venta.total' a la selección
-            'empleado.nombre as nombre_empleado',
-            'cliente.nombre as nombre_cliente',
-            DB::raw('GROUP_CONCAT(producto.nombre SEPARATOR ", ") as nombres_productos'),
-            DB::raw('SUM(detalle_venta.importe) as importe_total_venta')
-        )
-        ->groupBy('venta.id_venta', 'venta.fecha', 'venta.total', 'empleado.nombre', 'cliente.nombre') // Incluimos 'venta.total' en el groupBy
-        ->orderBy('venta.id_venta', 'DESC')
-        ->get();
-
-    return view('catalogos.ventasGet', [
-        "ventas" => $ventas,
-        "breadcrumbs" => [
-            "Inicio" => URL("/"),
-            "ventas" => URL("/catalogo/ventas")
-        ]
-    ]);
-}
+    {
+        $ventas = DB::table('venta')
+            ->join('empleado', 'venta.fk_id_empleado', '=', 'empleado.id_empleado')
+            ->join('cliente', 'venta.fk_id_cliente', '=', 'cliente.id_cliente')
+            ->leftJoin('detalle_venta', 'venta.id_venta', '=', 'detalle_venta.fk_id_venta')
+            ->leftJoin('producto', 'detalle_venta.fk_id_producto', '=', 'producto.id_producto')
+            ->select(
+                'venta.id_venta',
+                'venta.fecha',
+                'venta.total', // Seleccionamos 'venta.total'
+                'empleado.nombre as nombre_empleado',
+                'cliente.nombre as nombre_cliente',
+                DB::raw('GROUP_CONCAT(producto.nombre SEPARATOR ", ") as nombres_productos'),
+                DB::raw('SUM(detalle_venta.importe) as importe_total_venta')
+            )
+            ->groupBy('venta.id_venta', 'venta.fecha', 'venta.total', 'empleado.nombre', 'cliente.nombre') // Agregamos 'venta.total' al GROUP BY
+            ->orderBy('venta.id_venta', 'DESC')
+            ->get();
+    
+        return view('catalogos.ventasGet', [
+            "ventas" => $ventas,
+            "breadcrumbs" => [
+                "Inicio" => URL("/"),
+                "ventas" => URL("/catalogo/ventas")
+            ]
+        ]);
+    }
     public function ventasAgregarGet(): View
     {
         $empleados = Empleado::all();
