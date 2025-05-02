@@ -24,7 +24,7 @@ class Venta extends Model
      {
          return $this->hasMany(DetalleVenta::class, 'fk_id_venta', 'id_venta');
      }
-     
+
     use hasFactory;
     protected $table='venta';
     protected $primaryKey = 'id_venta';    
@@ -33,6 +33,7 @@ class Venta extends Model
     protected $fecha;
     protected $fk_id_empleado;
     protected $fk_id_cliente;
-    protected $fillable=["fecha","fk_id_empleado","fk_id_cliente"];
+    protected $total;
+    protected $fillable=["fecha","fk_id_empleado","fk_id_cliente" ,"total"];
     public $timestamps =false;
 }
