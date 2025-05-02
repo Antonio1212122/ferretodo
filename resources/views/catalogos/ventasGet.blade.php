@@ -17,9 +17,7 @@
         <tr>
             <th>ID Venta</th>
             <th>Fecha</th>
-            <th>Empleado</th>
             <th>Cliente</th>
-            <th>Producto</th>
             <th>Total</th> 
             <th>Acciones</th>
         </tr>
@@ -29,11 +27,9 @@
         <tr>
             <td>{{ $venta->id_venta }}</td>
             <td>{{ $venta->fecha }}</td>
-            <td>{{ $venta->nombre_empleado }}</td>
             <td>{{ $venta->nombre_cliente }}</td>
-            <td>{{ $venta->nombres_productos }}</td>
             <td>${{ number_format($venta->total, 2) }}</td>
-             <td> 
+            <td> 
                 <a href="{{ url('/catalogo/ventas/' . $venta->id_venta . '/detalle') }}" class="btn btn-info btn-sm">Detalle</a>
             </td>
         </tr>
@@ -41,7 +37,6 @@
     </tbody>
 </table>
 @endsection
-
 
 
 
