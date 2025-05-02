@@ -2,7 +2,6 @@
 @section("content")
 @component("components.breadcrumbs", ["breadcrumbs" => $breadcrumbs]) @endcomponent
 
-section('content')
 <div class="container">
     <h2>Detalle de Venta #{{ $venta->id_venta }}</h2>
 

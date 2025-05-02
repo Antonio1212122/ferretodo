@@ -20,8 +20,8 @@
             <th>Empleado</th>
             <th>Cliente</th>
             <th>Producto</th>
-            <th>Acciones</th> 
-
+            <th>Total</th> 
+            <th>Acciones</th>
         </tr>
     </thead>
     <tbody>
@@ -32,9 +32,9 @@
             <td>{{ $venta->nombre_empleado }}</td>
             <td>{{ $venta->nombre_cliente }}</td>
             <td>{{ $venta->nombres_productos }}</td>
-            <td>
+            <td>${{ number_format($venta->total, 2) }}</td>
+             <td> 
                 <a href="{{ url('/catalogo/ventas/' . $venta->id_venta . '/detalle') }}" class="btn btn-info btn-sm">Detalle</a>
-
             </td>
         </tr>
         @endforeach
