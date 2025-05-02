@@ -38,6 +38,10 @@ route::get('/catalogo/productos',[CatalogosController::class,'productosGet']);
 Route::get("/catalogo/ventas", [CatalogosController::class, "ventasGet"]);/////
 Route::get("/catalogo/ventas/agregar", [CatalogosController::class, "ventasAgregarGet"]);//////
 Route::post("/catalogos/ventas/agregar", [CatalogosController::class, "ventasAgregarPost"]);/////////
+Route::get('/catalogo/ventas/detalle/{id}', [CatalogosController::class, 'ventasDetalle']);
+Route::get('/catalogo/ventas/{id_venta}/detalle', [CatalogosController::class, 'ventasDetalleGet']);////////
+
+
 
 route::get('/catalogo/compra',[CatalogosController::class,'comprasGet']);
 

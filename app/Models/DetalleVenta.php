@@ -7,14 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class DetalleVenta extends Model
 {
-    public function venta()
-    {
-    return $this->belongsTo(Venta::class);
-    }
-
     public function producto()
     {
-        return $this->belongsTo(Producto::class);
+        return $this->belongsTo(Producto::class, 'fk_id_producto', 'id_producto');
     }
     use hasFactory;
     protected $table='detalle_venta';
@@ -28,4 +23,9 @@ class DetalleVenta extends Model
     protected $fk_id_producto;
     protected $fillable=["cantidad","precio_venta","importe","fk_id_venta","fk_id_producto"];
     public $timestamps =false;
+
+    public function venta()
+{
+    return $this->belongsTo(Venta::class, 'fk_id_venta', 'id_venta');
+}
 }

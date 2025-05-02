@@ -336,6 +336,20 @@ class CatalogosController extends Controller
     return redirect('/catalogo/ventas');
 }
 
+public function ventasDetalleGet($id_venta): View
+{
+    $venta = Venta::with(['empleado', 'cliente', 'detalleventa.producto'])->findOrFail($id_venta);
+
+    return view('catalogos.ventasDetalleGet', [
+        'venta' => $venta,
+        'breadcrumbs' => [
+            "Inicio" => URL("/"),
+            "Ventas" => URL("/catalogo/ventas"),
+            "Detalle" => URL("/catalogo/ventas/{$id_venta}/detalle")
+        ]
+    ]);
+}
+
 public function comprasGet()
 {
     $compras = DB::table('compra')
