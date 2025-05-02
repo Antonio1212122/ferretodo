@@ -154,7 +154,7 @@ class CatalogosController extends Controller
             $empleado->save();
 
             // Redirigir con un mensaje de éxito
-            return redirect(url('/catalogos/empleados'))->with('success', 'Empleado agregado correctamente.');
+            return redirect(url('/catalogo/empleados'))->with('success', 'Empleado agregado correctamente.');
             
         } catch (\Exception $e) {
             // Capturar errores y devolver una respuesta clara
