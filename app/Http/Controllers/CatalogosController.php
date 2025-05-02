@@ -8,13 +8,12 @@ use Illuminate\Http\Request;
 use datatime;
 use Illuminate\view\View;
 use App\Models\Empleado;
-use App\Models\Det_emp_puesto;
 use App\Models\Categoria;
 use App\Models\Cliente;
 use App\Models\Proveedor;
 use App\Models\Producto;
 use App\Models\Compra;
-use App\Models\Detallecompra;
+use App\Models\DetalleCompra;
 use App\Models\Venta;
 use App\Models\DetalleVenta;//
 class CatalogosController extends Controller
