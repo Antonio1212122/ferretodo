@@ -23,8 +23,8 @@
 
         <div class="row">
             <div class="form-group col-md-6">
-                <label for="descripcion">Descripción:</label>
-                <input type="text" maxlength="255" name="descripcion" id="descripcion" 
+                <label for="descripción">Descripción:</label>
+                <input type="text" maxlength="255" name="descripción" id="descripción" 
                     placeholder="Ingrese la descripción del producto" class="form-control" required>
             </div>
         </div>

@@ -13,12 +13,12 @@ protected $primaryKey = 'id_producto';//atributo de llave primaria asociado con 
 public $incrementing = true;//indica si el id del modelo es autoincrementable
 protected $keyType = "int";// indica el tipo de dato del id autoincrementable
 protected $nombre;//nombre del campo para recibir el nombre del puesto
-protected $descripcion;//nombre del campo para recibir el sueldo
+protected $descripción;//nombre del campo para recibir el sueldo
 protected $cantidad;
 protected $precio_unitario;
 protected $precio_venta;
 protected $fk_id_categoria;
-protected $fillable=["nombre","descripcion","cantidad","precio_unitario","precio_venta","fk_id_categoria"];//atributos que se pueden asignar masivamente
+protected $fillable=["nombre","descripción","cantidad","precio_unitario","precio_venta","fk_id_categoria"];//atributos que se pueden asignar masivamente
 public $timestamps=false;
 
 public function categoria()

@@ -236,7 +236,7 @@ class CatalogosController extends Controller
     {
         // Obtener los datos del formulario
         $nombre = $request->input("nombre");
-        $descripcion = $request->input("descripcion");
+        $descripción = $request->input("descripción");
         $cantidad = $request->input("cantidad");
         $precio_unitario = $request->input("precio_unitario");
         $precio_venta = $request->input("precio_venta");
@@ -245,7 +245,7 @@ class CatalogosController extends Controller
         // Crear una nueva instancia de Producto
         $producto = new Producto([
             "nombre" => $nombre,
-            "descripcion" => $descripcion,
+            "descripción" => $descripción,
             "cantidad" => $cantidad,
             "precio_unitario" => $precio_unitario,
             "precio_venta" => $precio_venta,
