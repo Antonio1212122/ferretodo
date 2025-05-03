@@ -8,14 +8,18 @@ use Illuminate\Database\Eloquent\Model;
 class Empleado extends Model
 {
     use HasFactory;
-    protected $table = 'empleado'; // nombre de la tabla en la BD a la que el modelo hace referencia.
-    protected $primaryKey = 'id_empleado';//atributo de llave primaria asociado con la tabla
-    public $incrementing = true;//indica si el id del modelo es autoincrementable
-    protected $keyType = "int";// indica el tipo de dato del id autoincrementable
-    protected $nombre;//nombre del campo para recibir el nombre del empleado
-    protected $puesto;//nombre del campo para la fecha de ingreso a la empresa
-    protected $telefono;//nombre del campo para registrar si está o no activo el empleado
-    protected $email;
-    protected $fillable=["nombre","puesto", "telefono","email"];
-    public $timestamps=false;
+
+    protected $table = 'empleado'; // Nombre de la tabla en la base de datos
+    protected $primaryKey = 'id_empleado'; // Clave primaria
+    public $incrementing = true; // Indica si el ID es autoincremental
+    protected $keyType = "int"; // Tipo de dato del ID
+    public $timestamps = false; // Si no usas created_at y updated_at
+
+    // Atributos que se pueden asignar masivamente
+    protected $fillable = [
+        'nombre',
+        'puesto',
+        'telefono',
+        'email',
+    ];
 }
