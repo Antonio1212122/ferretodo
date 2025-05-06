@@ -448,13 +448,25 @@ public function eliminar($id)
 {
     $compra = Compra::findOrFail($id);
 
-    // Eliminar detalles relacionados primero (si la relación no tiene cascade)
+    // Obtener los detalles de la compra
+    $detalles = DetalleCompra::where('fk_id_compra', $id)->get();
+
+    foreach ($detalles as $detalle) {
+        $producto = Producto::find($detalle->fk_id_producto);
+        if ($producto) {
+            // Disminuir la existencia (sin que baje de 0)
+            $producto->cantidad = max(0, $producto->cantidad - $detalle->cantidad);
+            $producto->save();
+        }
+    }
+
+    // Eliminar detalles relacionados
     DetalleCompra::where('fk_id_compra', $id)->delete();
 
     // Eliminar la compra
     $compra->delete();
 
-    return redirect('/catalogo/compra')->with('success', 'Compra eliminada correctamente.');
+    return redirect('/catalogo/compra')->with('success', 'Compra eliminada y stock actualizado correctamente.');
 }
     
 }
