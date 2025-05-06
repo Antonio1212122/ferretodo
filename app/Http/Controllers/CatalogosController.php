@@ -396,23 +396,37 @@ public function comprasAgregarPost(Request $request)
         'compras.*.importe' => 'required|numeric|min:0',
     ]);
 
-    // Crear la compra
+    // Crear la compra principal
     $compra = Compra::create([
         'fecha' => $request->fecha,
         'total' => collect($request->compras)->sum('importe'),
         'fk_id_proveedor' => $request->fk_id_proveedor
     ]);
 
-    // Guardar detalle de compra
+    // Procesar cada detalle
     foreach ($request->compras as $detalle) {
+        // Guardar el detalle
         DetalleCompra::create([
             'fk_id_compra' => $compra->id_compra,
             'fk_id_producto' => $detalle['fk_id_producto'],
             'cantidad' => $detalle['cantidad'],
             'precio_unitario' => $detalle['precio_unitario'],
             'importe' => $detalle['importe'],
-            'fk_id_proveedor' => $request->fk_id_proveedor // corregido aquí
+            'fk_id_proveedor' => $request->fk_id_proveedor
         ]);
+
+        // Actualizar el producto correspondiente
+        $producto = Producto::find($detalle['fk_id_producto']);
+        if ($producto) {
+            // Aumentar existencia
+            $producto->cantidad += $detalle['cantidad'];
+
+            // Actualizar precios
+            $producto->precio_unitario = $detalle['precio_unitario'];
+            $producto->precio_venta = $detalle['precio_unitario'] * 1.25; // o usa una lógica que tengas
+
+            $producto->save();
+        }
     }
 
     return redirect('/catalogo/compra')->with('success', 'Compra registrada correctamente.');
@@ -429,6 +443,18 @@ public function comprasDetalleGet($id_compra)
             'Detalle de Compra' => url("/catalogo/compras/$id_compra/detalle")
         ]
     ]);
+}
+public function eliminar($id)
+{
+    $compra = Compra::findOrFail($id);
+
+    // Eliminar detalles relacionados primero (si la relación no tiene cascade)
+    DetalleCompra::where('fk_id_compra', $id)->delete();
+
+    // Eliminar la compra
+    $compra->delete();
+
+    return redirect('/catalogo/compra')->with('success', 'Compra eliminada correctamente.');
 }
     
 }
