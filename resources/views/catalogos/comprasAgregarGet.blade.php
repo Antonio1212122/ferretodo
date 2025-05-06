@@ -72,28 +72,32 @@ document.addEventListener('DOMContentLoaded', function () {
         div.dataset.index = index;
 
         div.innerHTML = `
-            <div class="form-group mb-3 col-md-4">
+            <div class="form-group mb-3 col-md-3">
                 <label>Producto</label>
                 <select name="compras[${index}][fk_id_producto]" class="form-control producto-select" required>
                     <option value="">Seleccionar Producto</option>
                     ${productosFiltrados.map(p => 
-                        `<option value="${p.id_producto}" data-precio="${p.precio_unitario}" data-categoria="${p.fk_id_categoria}">${p.nombre}</option>`
+                        `<option value="${p.id_producto}" data-precio="${p.precio_unitario}" data-venta="${p.precio_venta}" data-categoria="${p.fk_id_categoria}">${p.nombre}</option>`
                     ).join('')}
                 </select>
             </div>
-            <div class="form-group mb-3 col-md-2">
+            <div class="form-group mb-3 col-md-1">
                 <label>Cantidad</label>
                 <input type="number" name="compras[${index}][cantidad]" class="form-control cantidad-input" value="1" min="1" required>
             </div>
             <div class="form-group mb-3 col-md-2">
-                <label>Precio Unitario</label>
-                <input type="number" name="compras[${index}][precio_unitario]" class="form-control precio-input" step="0.01" readonly required>
+                <label>Precio Compra</label>
+                <input type="number" name="compras[${index}][precio_unitario]" class="form-control precio-compra-input" step="0.01" required>
+            </div>
+            <div class="form-group mb-3 col-md-2">
+                <label>Precio Venta</label>
+                <input type="number" name="compras[${index}][precio_venta]" class="form-control precio-venta-input" step="0.01" required>
             </div>
             <div class="form-group mb-3 col-md-2">
                 <label>Importe</label>
                 <input type="number" name="compras[${index}][importe]" class="form-control subtotal-input" step="0.01" readonly>
             </div>
-            <div class="form-group mb-3 col-md-2 d-flex align-items-end">
+            <div class="form-group mb-3 col-md-1 d-flex align-items-end">
                 <button type="button" class="btn btn-danger btn-sm eliminar-linea">X</button>
             </div>
         `;
@@ -105,18 +109,23 @@ document.addEventListener('DOMContentLoaded', function () {
     function agregarEventosLinea(linea) {
         const select = linea.querySelector('.producto-select');
         const cantidad = linea.querySelector('.cantidad-input');
-        const precio = linea.querySelector('.precio-input');
+        const precioCompra = linea.querySelector('.precio-compra-input');
+        const precioVenta = linea.querySelector('.precio-venta-input');
         const subtotal = linea.querySelector('.subtotal-input');
         const eliminarBtn = linea.querySelector('.eliminar-linea');
 
         select.addEventListener('change', () => {
             const selected = select.options[select.selectedIndex];
-            const precioVal = parseFloat(selected.dataset.precio) || 0;
-            precio.value = precioVal.toFixed(2);
+            const precioCompraVal = parseFloat(selected.dataset.precio) || 0;
+            const precioVentaVal = parseFloat(selected.dataset.venta) || 0;
+
+            precioCompra.value = precioCompraVal.toFixed(2);
+            precioVenta.value = precioVentaVal.toFixed(2);
             actualizarSubtotal();
         });
 
         cantidad.addEventListener('input', actualizarSubtotal);
+        precioCompra.addEventListener('input', actualizarSubtotal);
 
         eliminarBtn.addEventListener('click', () => {
             linea.remove();
@@ -125,7 +134,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         function actualizarSubtotal() {
             const cantidadVal = parseFloat(cantidad.value) || 0;
-            const precioVal = parseFloat(precio.value) || 0;
+            const precioVal = parseFloat(precioCompra.value) || 0;
             subtotal.value = (cantidadVal * precioVal).toFixed(2);
             actualizarTotalGeneral();
         }
