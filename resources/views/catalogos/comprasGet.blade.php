@@ -12,6 +12,11 @@
         <a class="btn btn-primary" href="{{ url('/catalogo/compras/agregar') }}">Agregar</a>
     </div>
 </div>
+
+@if (session('success'))
+    <div class="alert alert-success">{{ session('success') }}</div>
+@endif
+
 <table class="table" id="maintable">
     <thead>
         <tr>
@@ -33,6 +38,12 @@
             <a href="{{ url('/catalogo/compras/' . $compra->id_compra . '/detalle') }}" class="btn btn-info btn-sm">
                 Ver Detalle
             </a>
+
+            <form method="POST" action="{{ route('compras.eliminar', $compra->id_compra) }}" style="display:inline-block" onsubmit="return confirm('¿Estás seguro de eliminar esta compra?')">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+            </form>
         </td>
     </tr>
     @endforeach
