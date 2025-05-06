@@ -51,9 +51,10 @@ route::get('/catalogo/productos/agregar',[CatalogosController::class,'productosA
 Route::post('/catalogos/productos/agregar',[CatalogosController::class,'productosAgregarPost']);
 
 route::get('/reportes',[ReportesController::class,'indexGet']);
-Route::get("/reportes/compras", [ReportesController::class, "comprasGet"]);
-Route::get("/reportes/ventas", [ReportesController::class, "ventasGet"]);
+Route::get('/reportes/compras', [ReportesController::class, 'comprasGet'])->name('compras.get');
+Route::get("/reportes/ventas", [ReportesController::class, "ventasGet"])->name('ventas.get');
 Route::get("/reportes/productos_mas_vendidos", [ReportesController::class, "productosGet"]);
+Route::get('/reportes/clientes-recurrentes', [ReportesController::class, 'clientesRecurrentes'])->name('clientes.recurrentes');
 
 Route::get("/login", [LoginController::class, 'showLoginForm'])->name('login');
 Route::post("/login", [LoginController::class, 'login']);

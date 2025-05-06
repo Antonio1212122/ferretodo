@@ -18,6 +18,9 @@
         <div class="col-md-4">
             <a href="{{url("/reportes/productos_mas_vendidos")}}" class="btn-menu">Productos Estrella</a>
         </div>
+        <div class="col-md-4">
+            <a href="{{url("/reportes/clientes-recurrentes")}}" class="btn-menu">Clientes Recurrentes</a>
+        </div>
     </div>
 </div>
 @endsection
