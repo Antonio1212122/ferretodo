@@ -190,7 +190,7 @@ class CatalogosController extends Controller
         $nombre = $request->input("nombre");
     
         $proveedor = new Proveedor([
-            "nombre" => ($nombre)
+            "nombre" =>strtoupper ($nombre)
         ]);
     
         $proveedor->save();

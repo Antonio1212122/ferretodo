@@ -16,15 +16,15 @@
 <table class="table" id="maintable">
     <thead>
         <tr>
-            <th scope="col">ID</th>
-            <th scope="col">Nombre</th>
+        <th scope="col" class="text-center">ID</th>
+        <th scope="col" class="text-start">Nombre</th>
         </tr>
     </thead>
     <tbody>
         @foreach($proveedores as $proveedor)
         <tr>
             <td class="text-center">{{$proveedor->id_proveedor}}</td>
-            <td class="text-center">{{$proveedor->nombre}}</td>
+            <td class="text-start">{{$proveedor->nombre}}</td>
         </tr>
         @endforeach
     </tbody>
