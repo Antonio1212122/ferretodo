@@ -17,50 +17,32 @@
 <table class="table" id="maintable">
     <thead>
         <tr>
-            <th>ID</th>
-            <th>Nombre</th>
-            <th>Descripción</th>
-            <th>Cantidad</th>
-            <th>Precio Unitario</th>
-            <th>Precio Venta</th>
-            <th>Categoría</th>
+            <th scope="col" class="text-center">ID</th>
+            <th scope="col" class="text-start">Nombre</th>
+            <th scope="col" class="text-start">Descripción</th>
+            <th scope="col" class="text-center">Cantidad</th>
+            <th scope="col" class="text-center">Precio Unitario</th>
+            <th scope="col" class="text-center">Precio Venta</th>
+            <th scope="col" class="text-start">Categoría</th>
         </tr>
     </thead>
     <tbody>
         @foreach($productos as $producto)
         <tr>
             <td class="text-center">{{ $producto->id_producto }}</td>
-            <td class="text-center">{{ $producto->nombre }}</td>
-            <td class="text-center">{{ $producto->descripción }}</td>
+            <td class="text-start">{{ $producto->nombre }}</td>
+            <td class="text-start">{{ $producto->descripción }}</td>
             <td class="text-center">{{ $producto->cantidad }}</td>
             <td class="text-center">${{ number_format($producto->precio_unitario, 2) }}</td>
             <td class="text-center">${{ number_format($producto->precio_venta, 2) }}</td>
-            <td class="text-center">{{ $producto->nombre_categoria }}</td>
+            <td class="text-start">{{ $producto->nombre_categoria }}</td>
         </tr>
         @endforeach
     </tbody>
 </table>
 
-<!-- Agregar DataTables -->
 <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        new DataTable("#maintable", {
-            paging: true,
-            searching: true,
-            responsive: true,
-            language: {
-                search: "Buscar:",
-                lengthMenu: "Mostrar _MENU_ registros por página",
-                info: "Mostrando _START_ a _END_ de _TOTAL_ registros",
-                paginate: {
-                    first: "Primero",
-                    last: "Último",
-                    next: "Siguiente",
-                    previous: "Anterior"
-                }
-            }
-        });
-    });
+    let table = new DataTable('#maintable', { paging: true, searching: true });
 </script>
 
 @endsection
