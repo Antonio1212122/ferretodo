@@ -1,4 +1,5 @@
 @extends("components.layout") 
+
 @section("content") 
 
 @component("components.breadcrumbs", ["breadcrumbs" => $breadcrumbs]) 
@@ -16,23 +17,23 @@
 <table class="table" id="maintable">
     <thead>
         <tr>
-            <th scope="col">ID</th>
-            <th scope="col">Nombre</th>
-            <th scope="col">Apellido</th>
-            <th scope="col">Direccion</th>
-            <th scope="col">Telefono</th>
-            <th scope="col">Email</th>
+            <th scope="col" class="text-center">ID</th>
+            <th scope="col" class="text-start">Nombre</th>
+            <th scope="col" class="text-start">Apellido</th>
+            <th scope="col" class="text-start">Dirección</th>
+            <th scope="col" class="text-center">Teléfono</th>
+            <th scope="col" class="text-start">Email</th>
         </tr>
     </thead>
     <tbody>
         @foreach($clientes as $cliente)
         <tr>
             <td class="text-center">{{$cliente->id_cliente}}</td>
-            <td class="text-center">{{$cliente->nombre}}</td>
-            <td class="text-center">{{$cliente->apellido}}</td> 
-            <td class="text-center">{{$cliente->direccion}}</td>
+            <td class="text-start">{{$cliente->nombre}}</td>
+            <td class="text-start">{{$cliente->apellido}}</td> 
+            <td class="text-start">{{$cliente->direccion}}</td>
             <td class="text-center">{{$cliente->telefono}}</td>
-            <td class="text-center">{{$cliente->email}}</td>
+            <td class="text-start">{{$cliente->email}}</td>
         </tr>
         @endforeach
     </tbody>
