@@ -79,37 +79,62 @@ class ReportesController extends Controller
         return view("reportes.ventasGet", compact("detalles", "total", "fecha_inicio", "fecha_fin"));
     }
 
-    public function productosGet()
+    public function productosGet(Request $request)
     {
-        $productos = DetalleVenta::join("producto", "detalle_venta.fk_id_producto", "=", "producto.id_producto")
+        $fechaInicio = $request->input('fecha_inicio');
+        $fechaFin = $request->input('fecha_fin');
+
+        $query = \App\Models\DetalleVenta::join('producto', 'detalle_venta.fk_id_producto', '=', 'producto.id_producto')
+            ->join('venta', 'detalle_venta.fk_id_venta', '=', 'venta.id_venta')
             ->select(
-                "producto.nombre",
-                DB::raw("SUM(detalle_venta.cantidad) as total_vendido")
-            )
-            ->groupBy("producto.id_producto", "producto.nombre")
-            ->orderByDesc("total_vendido")
+                'producto.nombre',
+                \DB::raw('SUM(detalle_venta.cantidad) as total_vendido')
+            );
+
+        if ($fechaInicio && $fechaFin) {
+            $query->whereBetween('venta.fecha', [$fechaInicio, $fechaFin]);
+        }
+
+        $productos = $query->groupBy('producto.nombre')
+            ->orderByDesc('total_vendido')
             ->get();
 
-        return view("reportes.productosGet", compact("productos"));
+        return view('reportes.productosGet', compact('productos'));
     }
-    
-    public function clientesRecurrentes()
-    {
-        $clientes = \App\Models\Cliente::join('venta', 'cliente.id_cliente', '=', 'venta.fk_id_cliente')
-        ->select(
-            'cliente.id_cliente',
-            'cliente.nombre',
-            'cliente.apellido',
-            'cliente.telefono',
-            'cliente.email',
-            \DB::raw('COUNT(venta.id_venta) as total_ventas')
-        )
-        ->groupBy('cliente.id_cliente', 'cliente.nombre', 'cliente.apellido', 'cliente.telefono', 'cliente.email')
-        ->orderByDesc('total_ventas')
-        ->get();
 
+    
+    public function clientesRecurrentes(Request $request)
+    {
+        $fechaInicio = $request->input('fecha_inicio');
+        $fechaFin = $request->input('fecha_fin');
+
+        $query = \App\Models\Cliente::join('venta', 'cliente.id_cliente', '=', 'venta.fk_id_cliente')
+            ->select(
+                'cliente.id_cliente',
+                'cliente.nombre',
+                'cliente.apellido',
+                'cliente.telefono',
+                'cliente.email',
+                \DB::raw('COUNT(venta.id_venta) as total_ventas')
+            );
+
+        if ($fechaInicio && $fechaFin) {
+            $query->whereBetween('venta.fecha', [$fechaInicio, $fechaFin]);
+        }
+
+        $clientes = $query->groupBy(
+                'cliente.id_cliente',
+                'cliente.nombre',
+                'cliente.apellido',
+                'cliente.telefono',
+                'cliente.email'
+            )
+            ->having('total_ventas', '>', 1)
+            ->orderByDesc('total_ventas')
+            ->get();
 
         return view('reportes.clientesRecurrentes', compact('clientes'));
     }
+
 
 }
