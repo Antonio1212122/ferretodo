@@ -1,4 +1,5 @@
 @extends("components.layout") 
+
 @section("content") 
 
 @component("components.breadcrumbs", ["breadcrumbs" => $breadcrumbs]) 
@@ -16,21 +17,21 @@
 <table class="table" id="maintable">
     <thead>
         <tr>
-            <th scope="col">ID</th>
-            <th scope="col">Nombre</th>
-            <th scope="col">Puesto</th>
-            <th scope="col">Telefono</th>
-            <th scope="col">Email</th>
+            <th scope="col" class="text-center">ID</th>
+            <th scope="col" class="text-start">Nombre</th>
+            <th scope="col" class="text-start">Puesto</th>
+            <th scope="col" class="text-center">Telefono</th>
+            <th scope="col" class="text-start">Email</th>
         </tr>
     </thead>
     <tbody>
         @foreach($empleados as $empleado)
         <tr>
             <td class="text-center">{{$empleado->id_empleado}}</td>
-            <td class="text-center">{{$empleado->nombre}}</td>
-            <td class="text-center">{{$empleado->puesto}}</td> 
+            <td class="text-start">{{$empleado->nombre}}</td>
+            <td class="text-start">{{$empleado->puesto}}</td> 
             <td class="text-center">{{$empleado->telefono}}</td>
-            <td class="text-center">{{$empleado->email}}</td>
+            <td class="text-start">{{$empleado->email}}</td>
         </tr>
         @endforeach
     </tbody>
