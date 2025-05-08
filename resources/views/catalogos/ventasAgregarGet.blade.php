@@ -30,7 +30,7 @@
             <select name="fk_id_cliente" class="form-control" required>
                 <option value="">Seleccionar Cliente</option>
                 @foreach($clientes as $cliente)
-                    <option value="{{ $cliente->id_cliente }}">{{ $cliente->nombre }}</option>
+                    <option value="{{ $cliente->id_cliente }}">{{ $cliente->nombre }} {{ $cliente->apellido }}</option>
                 @endforeach
             </select>
         </div>

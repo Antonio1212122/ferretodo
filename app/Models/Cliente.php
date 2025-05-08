@@ -24,4 +24,10 @@ public function ventas()
     return $this->hasMany(Venta::class, 'fk_id_cliente', 'id_cliente');
 }
 
+// Accesor para obtener el nombre completo
+public function getNombreCompletoAttribute()
+{
+    return "{$this->nombre} {$this->apellido}";
+}
+
 }

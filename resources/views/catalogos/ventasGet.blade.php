@@ -27,7 +27,7 @@
         <tr>
             <td>{{ $venta->id_venta }}</td>
             <td>{{ $venta->fecha }}</td>
-            <td>{{ $venta->nombre_cliente }}</td>
+            <td>{{ $venta->cliente->nombre }} {{ $venta->cliente->apellido }}</td> <!-- Acceso a la relación cliente -->
             <td>${{ number_format($venta->total, 2) }}</td>
             <td> 
                 <a href="{{ url('/catalogo/ventas/' . $venta->id_venta . '/detalle') }}" class="btn btn-info btn-sm">Detalle</a>

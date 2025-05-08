@@ -260,16 +260,8 @@ class CatalogosController extends Controller
     }
     public function ventasGet(): View
 {
-    $ventas = DB::table('venta')
-        ->join('cliente', 'venta.fk_id_cliente', '=', 'cliente.id_cliente')
-        ->select(
-            'venta.id_venta',
-            'venta.fecha',
-            'venta.total', 
-            'cliente.nombre as nombre_cliente'
-        )
-        ->groupBy('venta.id_venta', 'venta.fecha', 'venta.total', 'cliente.nombre') // Eliminamos empleado y producto del GROUP BY
-        ->orderBy('venta.id_venta', 'DESC')
+    $ventas = Venta::with('cliente') // Cargar la relación cliente
+        ->orderBy('id_venta', 'DESC')
         ->get();
 
     return view('catalogos.ventasGet', [
@@ -283,7 +275,7 @@ class CatalogosController extends Controller
     public function ventasAgregarGet(): View
     {
         $empleados = Empleado::all();
-        $clientes = Cliente::all();
+        $clientes = Cliente::all(); // Asegúrate de que Cliente es el modelo correcto
         $productos = Producto::all();
 
         return view('catalogos.ventasAgregarGet', [
@@ -329,6 +321,14 @@ class CatalogosController extends Controller
             'importe' => $productoData['importe'],
         ]);
         $totalVenta += $productoData['importe'];
+
+        // Actualizar el stock del producto
+        $producto = Producto::find($productoData['fk_id_producto']);
+        if ($producto) {
+            $producto->cantidad -= $productoData['cantidad'];
+            $producto->cantidad = max(0, $producto->cantidad); // Evitar valores negativos
+            $producto->save();
+        }
     }
 
     $venta->total = $totalVenta;
@@ -350,7 +350,6 @@ public function ventasDetalleGet($id_venta): View
         ]
     ]);
 }
-
 public function comprasGet()
 {
     $compras = DB::table('compra')

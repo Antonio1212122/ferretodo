@@ -8,7 +8,7 @@
     <div class="mb-4">
         <p><strong>Fecha:</strong> {{ $venta->fecha }}</p>
         <p><strong>Empleado:</strong> {{ $venta->empleado->nombre }}</p>
-        <p><strong>Cliente:</strong> {{ $venta->cliente->nombre }}</p>
+        <p><strong>Cliente:</strong> {{ $venta->cliente->nombre }} {{ $venta->cliente->apellido }}</p>
         <p><strong>Total:</strong> ${{ number_format($venta->total, 2) }}</p>
     </div>
 
@@ -34,6 +34,5 @@
         </tbody>
     </table>
 
-    <a href="{{ url('/catalogo/ventas') }}" class="btn btn-secondary">Regresar</a>
 </div>
 @endsection

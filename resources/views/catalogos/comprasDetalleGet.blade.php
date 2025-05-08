@@ -38,7 +38,7 @@
 
 <div class="row my-4">
     <div class="col">
-        <a href="{{ url('/catalogo/compra') }}" class="btn btn-secondary">← Volver a Compras</a>
+     
     </div>
 </div>
 @endsection
