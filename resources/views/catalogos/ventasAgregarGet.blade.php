@@ -11,6 +11,16 @@
 <form method="POST" action="{{ url('/catalogos/ventas/agregar') }}">
     @csrf
 
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul class="mb-0">
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
     <div class="row my-4">
         <div class="form-group mb-3 col-md-4">
             <label for="fecha">Fecha</label>
