@@ -293,7 +293,7 @@ class CatalogosController extends Controller
     public function ventasAgregarPost(Request $request)
 {
     $request->validate([
-        'fecha' => 'required|date',
+        'fecha' => 'required|date|before_or_equal:today',
         'fk_id_empleado' => 'required|exists:empleado,id_empleado',
         'fk_id_cliente' => 'required|exists:cliente,id_cliente',
         'productos' => 'required|array|min:1',
