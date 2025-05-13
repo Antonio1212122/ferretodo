@@ -12,6 +12,16 @@
 <form method="POST" action="{{ url('/catalogos/compras') }}">
     @csrf
 
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul class="mb-0">
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
     <div class="row my-4">
         <div class="form-group mb-3 col-md-4">
             <label for="fecha">Fecha</label>
@@ -30,7 +40,7 @@
 
     <div class="form-group mb-3 col-md-4">
         <label for="categoria">Categoría</label>
-        <select id="categoria" class="form-control">
+        <select id="categoria" name="fk_id_categoria" class="form-control" required>
             <option value="">Todas</option>
             @foreach($categorias as $categoria)
                 <option value="{{ $categoria->id_categoria }}">{{ $categoria->nombre }}</option>

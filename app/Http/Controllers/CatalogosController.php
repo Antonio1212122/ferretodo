@@ -388,13 +388,14 @@ public function comprasAgregarGet(): View
 public function comprasAgregarPost(Request $request)
 {
     $request->validate([
-        'fecha' => 'required|date',
+        'fecha' => 'required|date|before_or_equal:today',
         'fk_id_proveedor' => 'required|exists:proveedor,id_proveedor',
         'compras' => 'required|array|min:1',
         'compras.*.fk_id_producto' => 'required|exists:producto,id_producto',
         'compras.*.cantidad' => 'required|integer|min:1',
         'compras.*.precio_unitario' => 'required|numeric|min:0',
         'compras.*.importe' => 'required|numeric|min:0',
+        'fk_id_categoria' => 'required|exists:categoria,id_categoria',
     ]);
 
     // Crear la compra principal
