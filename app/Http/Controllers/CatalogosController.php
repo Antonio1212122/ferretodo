@@ -301,6 +301,8 @@ class CatalogosController extends Controller
         'productos.*.cantidad' => 'required|integer|min:1',
         'productos.*.precio_venta' => 'required|numeric|min:0',
         'productos.*.importe' => 'required|numeric|min:0',
+    ], [
+        'fecha.before_or_equal' => 'La fecha de la venta no puede ser mayor a hoy.',
     ]);
 
     $venta = Venta::create([
