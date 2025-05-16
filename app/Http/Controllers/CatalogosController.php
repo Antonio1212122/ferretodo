@@ -134,34 +134,29 @@ class CatalogosController extends Controller
         ]);
     }
 
-    public function empleadosAgregarPost(Request $request)
-    {
-        try {
-            // Validar los datos del formulario antes de guardar
-            $request->validate([
-                'nombre'   => 'required|string|max:50',
-                'puesto'   => 'required|string|max:50',
-                'telefono' => 'required|string|max:15',
-                'email'    => 'required|email|max:50|unique:empleado,email',
-            ]);
+public function empleadosAgregarPost(Request $request)
+{
+    // Validar datos (Laravel redirigirá automáticamente si falla)
+    $request->validate([
+        'nombre'   => ['required', 'regex:/^[\pL\s]+$/u', 'max:50'],
+        'puesto'   => ['required', 'regex:/^[\pL\s]+$/u', 'max:50'],
+        'telefono' => 'required|string|max:15',
+        'email'    => 'required|email|max:50|unique:empleado,email',
+    ], [
+        'nombre.regex' => 'El nombre solo puede contener letras y espacios.',
+        'puesto.regex' => 'El puesto solo puede contener letras y espacios.',
+    ]);
 
-            // Crear el nuevo empleado
-            $empleado = new Empleado();
-            $empleado->nombre = strtoupper($request->input("nombre"));
-            $empleado->puesto = $request->input("puesto");
-            $empleado->telefono = $request->input("telefono");
-            $empleado->email = $request->input("email");
-            $empleado->save();
+    // Si pasa la validación, guarda el empleado
+    $empleado = new Empleado();
+    $empleado->nombre = strtoupper($request->input("nombre"));
+    $empleado->puesto = $request->input("puesto");
+    $empleado->telefono = $request->input("telefono");
+    $empleado->email = $request->input("email");
+    $empleado->save();
 
-            // Redirigir con un mensaje de éxito
-            return redirect(url('/catalogo/empleados'))->with('success', 'Empleado agregado correctamente.');
-            
-        } catch (\Exception $e) {
-            // Capturar errores y devolver una respuesta clara
-            return redirect()->back()->with('error', 'Ocurrió un error: ' . $e->getMessage());
-        }
-    }
-
+    return redirect(url('/catalogo/empleados'))->with('success', 'Empleado agregado correctamente.');
+}
 
     public function proveedoresGet(): View
     {
