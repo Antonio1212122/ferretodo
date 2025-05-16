@@ -87,27 +87,30 @@ class CatalogosController extends Controller
     }
 
     public function clientesAgregarPost(Request $request)
-    {
-        $nombre = $request->input('nombre');
-        $apellido = $request->input('apellido');
-        $direccion = $request->input('direccion');
-        $telefono = $request->input('telefono');
-        $email = $request->input('email');
+{
+    $request->validate([
+        'nombre'    => ['required', 'regex:/^[\pL\s]+$/u', 'max:50'],
+        'apellido'  => ['required', 'regex:/^[\pL\s]+$/u', 'max:50'],
+        'direccion' => 'required|string|max:100',
+        'telefono'  => 'required|string|max:15',
+        'email'     => 'required|email|max:50|unique:cliente,email',
+    ], [
+        'nombre.regex'   => 'El nombre solo puede contener letras y espacios.',
+        'apellido.regex' => 'El apellido solo puede contener letras y espacios.',
+    ]);
 
-        // Crear una nueva instancia del modelo Cliente
-        $cliente = new Cliente([
-            'nombre' => strtoupper($nombre),  // Convertir a mayúsculas
-            'apellido' => strtoupper($apellido),
-            'direccion' => $direccion,
-            'telefono' => $telefono,
-            'email' => $email
-        ]);
+    $cliente = new Cliente([
+        'nombre'    => strtoupper($request->input('nombre')),
+        'apellido'  => strtoupper($request->input('apellido')),
+        'direccion' => $request->input('direccion'),
+        'telefono'  => $request->input('telefono'),
+        'email'     => $request->input('email')
+    ]);
 
-        $cliente->save();
+    $cliente->save();
 
-        // Redirigir a la vista de clientes con un mensaje de éxito
-        return redirect('/catalogo/clientes')->with('success', 'Cliente agregado correctamente');
-    }
+    return redirect('/catalogo/clientes')->with('success', 'Cliente agregado correctamente');
+}
 
 
     public function empleadoGet(): View
@@ -157,6 +160,7 @@ public function empleadosAgregarPost(Request $request)
 
     return redirect(url('/catalogo/empleados'))->with('success', 'Empleado agregado correctamente.');
 }
+
 
     public function proveedoresGet(): View
     {
