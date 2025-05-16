@@ -16,7 +16,24 @@
         <div class="row my-4">
             <div class="form-group mb-3 col-6">
                 <label for="nombre">Nombre:</label>
-                <input type="text" maxlength="50" class="form-control" name="nombre" placeholder="Ingrese el nombre del proveedor" id="nombre" required autofocus>
+                <input 
+                    type="text" 
+                    maxlength="50" 
+                    class="form-control @error('nombre') is-invalid @enderror" 
+                    name="nombre" 
+                    placeholder="Ingrese el nombre del proveedor" 
+                    id="nombre" 
+                    value="{{ old('nombre') }}"
+                    required 
+                    autofocus
+                >
+                
+                {{-- Mostrar error si el nombre no es válido --}}
+                @error('nombre')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                @enderror
             </div>
         </div>
 

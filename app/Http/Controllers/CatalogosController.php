@@ -186,17 +186,23 @@ class CatalogosController extends Controller
         ]);
     }
     public function proveedoresAgregarPost(Request $request)
-    {
-        $nombre = $request->input("nombre");
-    
-        $proveedor = new Proveedor([
-            "nombre" =>strtoupper ($nombre)
-        ]);
-    
-        $proveedor->save();
-    
-        return redirect("/catalogo/proveedores");
-    }
+{
+    $request->validate([
+        'nombre' => ['required', 'regex:/^[\pL\s]+$/u'], // Solo letras y espacios
+    ], [
+        'nombre.regex' => 'El nombre solo puede contener letras y espacios.',
+    ]);
+
+    $nombre = $request->input("nombre");
+
+    $proveedor = new Proveedor([
+        "nombre" => strtoupper($nombre)
+    ]);
+
+    $proveedor->save();
+
+    return redirect("/catalogo/proveedores");
+}
 
     public function productosGet(): View
 {
