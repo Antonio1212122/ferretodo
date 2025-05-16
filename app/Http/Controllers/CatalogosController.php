@@ -45,21 +45,24 @@ class CatalogosController extends Controller
         ]);
     }
 
-    public function categoriasAgregarPost(Request $request) {
-        // Obtener los datos del formulario
-        $nombre = $request->input("nombre");
-        $descripción = $request->input("descripción");
-    
-        // Crear la nueva categoría
-        $categoria = new Categoria([
-            "nombre" => strtoupper($nombre),
-            "descripción" => $descripción,
-        ]);
-        $categoria->save();
-    
-        // Redirigir a la vista de categorías con un mensaje de éxito
-        return redirect("/catalogo/categorias")->with('success', 'Categoría agregada correctamente');
-    }
+public function categoriasAgregarPost(Request $request) {
+    $request->validate([
+        'nombre' => ['required', 'regex:/^[\pL\s]+$/u', 'max:100'],
+        'descripción' => ['required', 'regex:/^[\pL\s,]+$/u'],
+    ], [
+        'nombre.regex' => 'El nombre solo puede contener letras y espacios.',
+        'descripción.regex' => 'La descripción solo puede contener letras, espacios y comas.',
+    ]);
+
+    // Crear la nueva categoría
+    $categoria = new Categoria([
+        "nombre" => strtoupper($request->input("nombre")),
+        "descripción" => $request->input("descripción"),
+    ]);
+    $categoria->save();
+
+    return redirect("/catalogo/categorias")->with('success', 'Categoría agregada correctamente');
+}
     
 
 
