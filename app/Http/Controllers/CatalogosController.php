@@ -237,32 +237,36 @@ public function empleadosAgregarPost(Request $request)
             ]
         ]);
     }
-    public function productosAgregarPost(Request $request)
-    {
-        // Obtener los datos del formulario
-        $nombre = $request->input("nombre");
-        $descripción = $request->input("descripción");
-        $cantidad = $request->input("cantidad");
-        $precio_unitario = $request->input("precio_unitario");
-        $precio_venta = $request->input("precio_venta");
-        $fk_id_categoria = $request->input("fk_id_categoria");
-    
-        // Crear una nueva instancia de Producto
-        $producto = new Producto([
-            "nombre" => $nombre,
-            "descripción" => $descripción,
-            "cantidad" => $cantidad,
-            "precio_unitario" => $precio_unitario,
-            "precio_venta" => $precio_venta,
-            "fk_id_categoria" => $fk_id_categoria
-        ]);
-    
-        // Guardar en la base de datos
-        $producto->save();
-    
-        // Redirigir a la lista de productos
-        return redirect("/catalogo/productos");
-    }
+public function productosAgregarPost(Request $request)
+{
+    // Validar los datos
+    $request->validate([
+        "nombre" => "required|string|max:100",
+        "descripción" => "nullable|string|max:255",
+        "cantidad" => "required|integer|min:0",
+        "precio_unitario" => "required|numeric|min:0",
+        "precio_venta" => "required|numeric|min:0",
+        "fk_id_categoria" => "required|exists:categoria,id_categoria" // ajusta si el nombre real de la tabla es distinto
+    ], [
+        "cantidad.min" => "La cantidad no puede ser negativa.",
+        "precio_unitario.min" => "El precio unitario no puede ser negativo.",
+        "precio_venta.min" => "El precio de venta no puede ser negativo.",
+    ]);
+
+    // Crear el producto
+    $producto = new Producto([
+        "nombre" => $request->input("nombre"),
+        "descripción" => $request->input("descripción"),
+        "cantidad" => $request->input("cantidad"),
+        "precio_unitario" => $request->input("precio_unitario"),
+        "precio_venta" => $request->input("precio_venta"),
+        "fk_id_categoria" => $request->input("fk_id_categoria")
+    ]);
+
+    $producto->save();
+
+    return redirect("/catalogo/productos")->with('success', 'Producto agregado correctamente.');
+}
     public function ventasGet(): View
 {
     $ventas = Venta::with('cliente') // Cargar la relación cliente
