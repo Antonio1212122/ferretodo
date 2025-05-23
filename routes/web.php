@@ -80,5 +80,9 @@ Route::post('/catalogo/productos/editar/{id}', [CatalogosController::class, 'pro
 Route::get('/catalogo/empleados/editar/{id}', [CatalogosController::class, 'empleadosEditarGet']);
 Route::post('/catalogo/empleados/editar/{id}', [CatalogosController::class, 'empleadosEditarPost']);
 
+Route::get('/catalogo/proveedores/editar/{id}', [CatalogosController::class, 'proveedoresEditarGet']);
+Route::post('/catalogo/proveedores/editar/{id}', [CatalogosController::class, 'proveedoresEditarPost']);
+
+
 
 

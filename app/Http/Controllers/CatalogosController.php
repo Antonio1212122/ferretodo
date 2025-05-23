@@ -296,6 +296,33 @@ public function empleadosEditarPost(Request $request, $id)
 
     return redirect("/catalogo/proveedores");
 }
+public function proveedoresEditarGet($id): View
+{
+    $proveedor = Proveedor::findOrFail($id);
+
+    return view('catalogos.proveedoresEditarGet', [
+        "proveedor" => $proveedor,
+        "breadcrumbs" => [
+            "Inicio" => url("/"),
+            "Proveedores" => url("/catalogo/proveedores"),
+            "Editar" => url("/catalogo/proveedores/editar/$id")
+        ]
+    ]);
+}
+public function proveedoresEditarPost(Request $request, $id)
+{
+    $request->validate([
+        'nombre' => ['required', 'regex:/^[\pL\s]+$/u'], // Solo letras y espacios
+    ], [
+        'nombre.regex' => 'El nombre solo puede contener letras y espacios.',
+    ]);
+
+    $proveedor = Proveedor::findOrFail($id);
+    $proveedor->nombre = strtoupper($request->input("nombre"));
+    $proveedor->save();
+
+    return redirect("/catalogo/proveedores")->with('success', 'Proveedor actualizado correctamente.');
+}
 
     public function productosGet(): View
 {

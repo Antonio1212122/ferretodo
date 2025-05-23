@@ -18,6 +18,7 @@
         <tr>
         <th scope="col" class="text-center">ID</th>
         <th scope="col" class="text-start">Nombre</th>
+        <th scope="col" class="text-start">Acciones</th>
         </tr>
     </thead>
     <tbody>
@@ -25,6 +26,11 @@
         <tr>
             <td class="text-center">{{$proveedor->id_proveedor}}</td>
             <td class="text-start">{{$proveedor->nombre}}</td>
+             <td class="text-center">
+                <a href="{{ url('/catalogo/proveedores/editar/' . $proveedor->id_proveedor) }}" class="btn btn-sm btn-warning">
+                    Editar
+                </a>
+            </td>
         </tr>
         @endforeach
     </tbody>
