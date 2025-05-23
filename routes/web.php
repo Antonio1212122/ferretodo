@@ -77,4 +77,8 @@ Route::post('/catalogo/clientes/editar/{id}', [CatalogosController::class, 'clie
 Route::get('/catalogo/productos/editar/{id}', [CatalogosController::class, 'productosEditarGet']);
 Route::post('/catalogo/productos/editar/{id}', [CatalogosController::class, 'productosEditarPost']);
 
+Route::get('/catalogo/empleados/editar/{id}', [CatalogosController::class, 'empleadosEditarGet']);
+Route::post('/catalogo/empleados/editar/{id}', [CatalogosController::class, 'empleadosEditarPost']);
+
+
 

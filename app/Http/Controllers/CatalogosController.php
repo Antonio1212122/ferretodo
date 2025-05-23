@@ -219,6 +219,41 @@ public function empleadosAgregarPost(Request $request)
 
     return redirect(url('/catalogo/empleados'))->with('success', 'Empleado agregado correctamente.');
 }
+public function empleadosEditarGet($id): View
+{
+    $empleado = Empleado::findOrFail($id);
+
+    return view('catalogos.empleadosEditarGet', [
+        "empleado" => $empleado,
+        "breadcrumbs" => [
+            "Inicio" => url("/"),
+            "Empleados" => url("/catalogo/empleados"),
+            "Editar" => url("/catalogo/empleados/editar/$id")
+        ]
+    ]);
+}
+public function empleadosEditarPost(Request $request, $id)
+{
+    $request->validate([
+        'nombre'   => ['required', 'regex:/^[\pL\s]+$/u', 'max:50'],
+        'puesto'   => ['required', 'regex:/^[\pL\s]+$/u', 'max:50'],
+        'telefono' => 'required|string|max:15',
+        'email'    => "required|email|max:50|unique:empleado,email,$id,id_empleado",
+    ], [
+        'nombre.regex' => 'El nombre solo puede contener letras y espacios.',
+        'puesto.regex' => 'El puesto solo puede contener letras y espacios.',
+    ]);
+
+    $empleado = Empleado::findOrFail($id);
+    $empleado->nombre = strtoupper($request->input("nombre"));
+    $empleado->puesto = $request->input("puesto");
+    $empleado->telefono = $request->input("telefono");
+    $empleado->email = $request->input("email");
+    $empleado->save();
+
+    return redirect('/catalogo/empleados')->with('success', 'Empleado actualizado correctamente.');
+}
+
 
 
     public function proveedoresGet(): View
