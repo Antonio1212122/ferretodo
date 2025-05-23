@@ -23,6 +23,7 @@
             <th scope="col" class="text-start">Dirección</th>
             <th scope="col" class="text-center">Teléfono</th>
             <th scope="col" class="text-start">Email</th>
+            <th scope="col" class="text-start">Acciones</th>
         </tr>
     </thead>
     <tbody>
@@ -34,6 +35,9 @@
             <td class="text-start">{{$cliente->direccion}}</td>
             <td class="text-center">{{$cliente->telefono}}</td>
             <td class="text-start">{{$cliente->email}}</td>
+            <td class="text-center">
+                <a href="{{ url('/catalogo/clientes/editar/' . $cliente->id_cliente) }}" class="btn btn-sm btn-warning">Editar</a>
+            </td>
         </tr>
         @endforeach
     </tbody>

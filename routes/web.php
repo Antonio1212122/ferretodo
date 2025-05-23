@@ -71,3 +71,7 @@ Route::delete('/catalogos/compras/{id}', [CatalogosController::class, 'eliminar'
 Route::get('/catalogo/categorias/editar/{id}', [CatalogosController::class, 'categoriasEditarGet']);
 Route::post('/catalogo/categorias/editar/{id}', [CatalogosController::class, 'categoriasEditarPost']);
 
+Route::get('/catalogo/clientes/editar/{id}', [CatalogosController::class, 'clientesEditarGet']);
+Route::post('/catalogo/clientes/editar/{id}', [CatalogosController::class, 'clientesEditarPost']);
+
+

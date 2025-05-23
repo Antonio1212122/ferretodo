@@ -139,6 +139,37 @@ public function categoriasEditarPost(Request $request, $id) {
 
     return redirect('/catalogo/clientes')->with('success', 'Cliente agregado correctamente');
 }
+public function clientesEditarGet($id): View {
+    $cliente = Cliente::findOrFail($id);
+    return view('catalogos.clientesEditarGet', [
+        "cliente" => $cliente,
+        "breadcrumbs" => [
+            "Inicio" => url("/"),
+            "Clientes" => url("/catalogo/clientes"),
+            "Editar" => url("/catalogo/clientes/editar/" . $id),
+        ]
+    ]);
+}
+
+public function clientesEditarPost(Request $request, $id) {
+    $request->validate([
+        'nombre'    => ['required', 'regex:/^[\pL\s]+$/u', 'max:50'],
+        'apellido'  => ['required', 'regex:/^[\pL\s]+$/u', 'max:50'],
+        'direccion' => 'required|string|max:100',
+        'telefono'  => 'required|string|max:15',
+        'email'     => 'required|email|max:50|unique:cliente,email,' . $id . ',id_cliente',
+    ]);
+
+    $cliente = Cliente::findOrFail($id);
+    $cliente->nombre    = strtoupper($request->input('nombre'));
+    $cliente->apellido  = strtoupper($request->input('apellido'));
+    $cliente->direccion = $request->input('direccion');
+    $cliente->telefono  = $request->input('telefono');
+    $cliente->email     = $request->input('email');
+    $cliente->save();
+
+    return redirect('/catalogo/clientes')->with('success', 'Cliente actualizado correctamente');
+}
 
 
     public function empleadoGet(): View
