@@ -74,4 +74,7 @@ Route::post('/catalogo/categorias/editar/{id}', [CatalogosController::class, 'ca
 Route::get('/catalogo/clientes/editar/{id}', [CatalogosController::class, 'clientesEditarGet']);
 Route::post('/catalogo/clientes/editar/{id}', [CatalogosController::class, 'clientesEditarPost']);
 
+Route::get('/catalogo/productos/editar/{id}', [CatalogosController::class, 'productosEditarGet']);
+Route::post('/catalogo/productos/editar/{id}', [CatalogosController::class, 'productosEditarPost']);
+
 

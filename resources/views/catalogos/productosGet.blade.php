@@ -24,6 +24,7 @@
             <th scope="col" class="text-center">Precio Unitario</th>
             <th scope="col" class="text-center">Precio Venta</th>
             <th scope="col" class="text-start">Categoría</th>
+            <th scope="col" class="text-start">Acciones</th>
         </tr>
     </thead>
     <tbody>
@@ -36,6 +37,11 @@
             <td class="text-center">${{ number_format($producto->precio_unitario, 2) }}</td>
             <td class="text-center">${{ number_format($producto->precio_venta, 2) }}</td>
             <td class="text-start">{{ $producto->nombre_categoria }}</td>
+                        <td class="text-center">
+                <a href="{{ url('/catalogo/productos/editar/' . $producto->id_producto) }}" class="btn btn-sm btn-warning">
+                    Editar
+                </a>
+            </td>
         </tr>
         @endforeach
     </tbody>

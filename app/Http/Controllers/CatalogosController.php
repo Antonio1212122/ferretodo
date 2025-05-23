@@ -326,6 +326,50 @@ public function productosAgregarPost(Request $request)
 
     return redirect("/catalogo/productos")->with('success', 'Producto agregado correctamente.');
 }
+public function productosEditarGet($id): View
+{
+    $producto = Producto::findOrFail($id);
+    $categorias = Categoria::all();
+
+    return view('catalogos.productosEditarGet', [
+        "producto" => $producto,
+        "categorias" => $categorias,
+        "breadcrumbs" => [
+            "Inicio" => URL("/"),
+            "Productos" => URL("/catalogo/productos"),
+            "Editar" => URL("/catalogo/productos/editar/$id")
+        ]
+    ]);
+}
+public function productosEditarPost(Request $request, $id)
+{
+    // Validación
+    $request->validate([
+        "nombre" => "required|string|max:100",
+        "descripción" => "nullable|string|max:255",
+        "cantidad" => "required|integer|min:0",
+        "precio_unitario" => "required|numeric|min:0",
+        "precio_venta" => "required|numeric|min:0",
+        "fk_id_categoria" => "required|exists:categoria,id_categoria"
+    ], [
+        "cantidad.min" => "La cantidad no puede ser negativa.",
+        "precio_unitario.min" => "El precio unitario no puede ser negativo.",
+        "precio_venta.min" => "El precio de venta no puede ser negativo.",
+    ]);
+
+    // Buscar y actualizar producto
+    $producto = Producto::findOrFail($id);
+    $producto->nombre = $request->input("nombre");
+    $producto->descripción = $request->input("descripción");
+    $producto->cantidad = $request->input("cantidad");
+    $producto->precio_unitario = $request->input("precio_unitario");
+    $producto->precio_venta = $request->input("precio_venta");
+    $producto->fk_id_categoria = $request->input("fk_id_categoria");
+
+    $producto->save();
+
+    return redirect("/catalogo/productos")->with("success", "Producto actualizado correctamente.");
+}
     public function ventasGet(): View
 {
     $ventas = Venta::with('cliente') // Cargar la relación cliente
