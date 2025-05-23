@@ -68,3 +68,6 @@ Route::post('/catalogos/compras', [CatalogosController::class, 'comprasAgregarPo
 Route::get('/catalogo/compras/{id_compra}/detalle', [CatalogosController::class, 'comprasDetalleGet']);
 Route::delete('/catalogos/compras/{id}', [CatalogosController::class, 'eliminar'])->name('compras.eliminar');
 
+Route::get('/catalogo/categorias/editar/{id}', [CatalogosController::class, 'categoriasEditarGet']);
+Route::post('/catalogo/categorias/editar/{id}', [CatalogosController::class, 'categoriasEditarPost']);
+

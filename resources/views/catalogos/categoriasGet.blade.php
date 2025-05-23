@@ -20,6 +20,7 @@
             <th scope="col" class="text-start">ID</th>
             <th scope="col" class="text-start">Nombre</th>
             <th scope="col" class="text-start">Descripción</th>
+            <th scope="col" class= "text-start">Acciones</th>
         </tr>
     </thead>
     <tbody>
@@ -28,6 +29,9 @@
             <td class="text-start">{{$categoria->id_categoria}}</td>
             <td class="text-start">{{$categoria->nombre}}</td>
             <td class="text-start">{{$categoria->descripción}}</td> 
+            <td class="text-start">
+                <a href="{{ url('/catalogo/categorias/editar/' . $categoria->id_categoria) }}" class="btn btn-sm btn-warning">Editar</a>
+            </td>
         </tr>
         @endforeach
     </tbody>

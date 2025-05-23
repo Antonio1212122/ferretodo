@@ -63,6 +63,31 @@ public function categoriasAgregarPost(Request $request) {
 
     return redirect("/catalogo/categorias")->with('success', 'Categoría agregada correctamente');
 }
+public function categoriasEditarGet($id): View {
+    $categoria = Categoria::findOrFail($id);
+    return view('catalogos.categoriasEditarGet', [
+        "categoria" => $categoria,
+        "breadcrumbs" => [
+            "Inicio" => url("/"),
+            "Categorias" => url("/catalogo/categorias"),
+            "Editar" => url("/catalogo/categorias/editar/" . $id),
+        ]
+    ]);
+}
+
+public function categoriasEditarPost(Request $request, $id) {
+    $request->validate([
+        'nombre' => ['required', 'regex:/^[\pL\s]+$/u', 'max:100'],
+        'descripción' => ['required', 'regex:/^[\pL\s,]+$/u'],
+    ]);
+
+    $categoria = Categoria::findOrFail($id);
+    $categoria->nombre = strtoupper($request->input("nombre"));
+    $categoria->descripción = $request->input("descripción");
+    $categoria->save();
+
+    return redirect("/catalogo/categorias")->with('success', 'Categoría actualizada correctamente');
+}
     
 
 
