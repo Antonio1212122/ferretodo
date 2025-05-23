@@ -9,7 +9,7 @@
         <div class="col-md-6 offset-md-3">
             <div class="card">
                 <div class="card-body">
-                    <form action="{{ url('/login') }}" method="POST">
+                    <form action="{{ route('/login') }}" method="POST">
                         @csrf
                         <div class="mb-3">
                             <label for="email" class="form-label">Correo Electrónico</label>
