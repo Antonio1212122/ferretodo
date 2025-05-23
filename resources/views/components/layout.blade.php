@@ -4,10 +4,15 @@
     <link rel="stylesheet" href="{{ secure_asset('bootstrap-5.3.3-dist/css/bootstrap.min.css') }}" />
     <script src="{{ secure_asset('bootstrap-5.3.3-dist/js/bootstrap.min.js') }}"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- DataTables -->
     <link href="{{ secure_asset('DataTables/datatables.min.css') }}" rel="stylesheet"/>
     <script src="{{ secure_asset('DataTables/datatables.min.js') }}"></script>
-    <link href="{{ secure_asset('assets/style.css') }}" rel="stylesheet" />
 
+    <!-- ✅ Traducción al español para DataTables -->
+    <script src="https://cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json"></script>
+
+    <link href="{{ secure_asset('assets/style.css') }}" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
     <meta charset="UTF-8">
@@ -24,6 +29,5 @@
         @section('content')
         @show
     </div>
-
 </body>
 </html>

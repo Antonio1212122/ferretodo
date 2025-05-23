@@ -30,7 +30,7 @@
             <td class="text-center">{{$empleado->id_empleado}}</td>
             <td class="text-start">{{$empleado->nombre}}</td>
             <td class="text-start">{{$empleado->puesto}}</td> 
-            <td class="text-center">{{$empleado->telefono}}</td>
+            <td class="text-center">{{$empleado->telefono_formateado}}</td>
             <td class="text-start">{{$empleado->email}}</td>
         </tr>
         @endforeach
@@ -38,7 +38,13 @@
 </table>
 
 <script>
-    let table = new DataTable('#maintable', { paging: true, searching: true });
+    let table = new DataTable('#maintable', {
+        paging: true,
+        searching: true,
+        language: {
+            url: '//cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json'
+        }
+    });
 </script>
 
 @endsection

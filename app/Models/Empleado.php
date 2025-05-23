@@ -22,4 +22,16 @@ class Empleado extends Model
         'telefono',
         'email',
     ];
+
+    // ✅ Accessor para formatear el teléfono
+    public function getTelefonoFormateadoAttribute()
+    {
+        $tel = preg_replace('/\D/', '', $this->telefono);
+
+        if (strlen($tel) === 10) {
+            return preg_replace('/(\d{3})(\d{3})(\d{4})/', '$1-$2-$3', $tel);
+        }
+
+        return $this->telefono;
+    }
 }
