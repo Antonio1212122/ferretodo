@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <link rel="stylesheet" href="{{ secure_asset('bootstrap-5.3.3-dist/css/bootstrap.min.css') }}" />
     <script src="{{ secure_asset('bootstrap-5.3.3-dist/js/bootstrap.min.js') }}"></script>
