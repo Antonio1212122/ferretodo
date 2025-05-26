@@ -9,6 +9,12 @@
 .sidebar .nav-link {
     color: white;
     transition: background-color 0.5s;
+    border: 1.5px solid #ffffff55;
+    border-radius: 0.7rem;
+    padding: 0.5rem 1.2rem;
+    margin-bottom: 0.5rem;
+    background-color: #2563eb22; /* leve fondo para botón */
+    box-shadow: 0 1px 4px 0 rgba(0,0,0,0.04);
 }
 .sidebar .nav-link:hover {
     background-color: #ffffff20;
