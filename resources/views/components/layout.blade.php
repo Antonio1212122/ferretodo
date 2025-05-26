@@ -12,7 +12,7 @@
     <!-- ✅ Traducción al español para DataTables -->
     <script src="https://cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json"></script>
 
-    <link href="{{ secure_asset('assets/style.css') }}" rel="stylesheet" />
+    <link href="{{ secure_asset('assets/Style.css') }}" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
     <meta charset="UTF-8">
