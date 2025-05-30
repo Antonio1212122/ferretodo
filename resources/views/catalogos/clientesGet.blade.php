@@ -33,7 +33,12 @@
             <td class="text-start">{{$cliente->nombre}}</td>
             <td class="text-start">{{$cliente->apellido}}</td> 
             <td class="text-start">{{$cliente->direccion}}</td>
-            <td class="text-center">{{$cliente->telefono}}</td>
+            <td class="text-center">
+                @php
+                    $tel = $cliente->telefono;
+                    echo (strlen($tel) === 10) ? substr($tel,0,3).'-'.substr($tel,3,3).'-'.substr($tel,6,4) : $tel;
+                @endphp
+            </td>
             <td class="text-start">{{$cliente->email}}</td>
             <td class="text-center">
                 <a href="{{ url('/catalogo/clientes/editar/' . $cliente->id_cliente) }}" class="btn btn-sm btn-warning">Editar</a>
