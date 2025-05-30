@@ -46,13 +46,14 @@
     <div class="row my-4">
         <div class="form-group mb-3 col-6">
             <label for="telefono">Teléfono:</label>
-            <input type="text" maxlength="15"
+            <input type="text" maxlength="10" pattern="\d{10}"
                 class="form-control @error('telefono') is-invalid @enderror"
                 name="telefono"
                 id="telefono"
-                placeholder="Ingrese el teléfono"
+                placeholder="Ingrese el teléfono (10 dígitos)"
                 value="{{ old('telefono') }}"
-                required>
+                required
+                title="El teléfono debe contener exactamente 10 dígitos numéricos">
             @error('telefono')
                 <div class="invalid-feedback">{{ $message }}</div>
             @enderror
